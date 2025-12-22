@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Moses C. Okonkwo" }],
   icons: {
     icon: [
-      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "16x16", type: "image/png" },
+      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "40x40", type: "image/png" },
       { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "32x32", type: "image/png" },
       { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "192x192", type: "image/png" },
       { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "512x512", type: "image/png" }
