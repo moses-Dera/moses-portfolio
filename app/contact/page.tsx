@@ -11,35 +11,35 @@ export default function Contact() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSending(true);
-        
+
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
-            
+
             if (response.ok) {
                 setSent(true);
                 setFormData({ name: '', email: '', message: '' });
                 setTimeout(() => setSent(false), 3000);
             }
-        } catch (error) {
-            console.error('Failed to send email');
+        } catch (_error) {
+            console.error('Failed to send email:', _error);
         } finally {
             setSending(false);
         }
     };
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="min-h-screen p-8 flex flex-col items-center justify-center"
         >
             <div className="max-w-2xl mx-auto text-center">
-                <motion.h1 
+                <motion.h1
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -49,28 +49,28 @@ export default function Contact() {
                 </motion.h1>
 
                 <p className="text-lg mb-12 leading-relaxed" style={{ color: 'var(--color-text)' }}>
-                    Ready to collaborate on your next project? Let's discuss how we can build something amazing together.
+                    Ready to collaborate on your next project? Let&apos;s discuss how we can build something amazing together.
                 </p>
 
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="backdrop-blur-sm border p-8 hover:bg-white/5 transition-all" 
+                    className="backdrop-blur-sm border p-8 hover:bg-white/5 transition-all"
                     style={{
                         backgroundColor: 'var(--color-border)',
                         borderColor: 'var(--color-border)',
                         clipPath: 'polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px))'
                     }}
                 >
-                    <h2 className="text-2xl font-jetbrains mb-6">Let's Connect</h2>
-                    
+                    <h2 className="text-2xl font-jetbrains mb-6">Let&apos;s Connect</h2>
+
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"
                             placeholder="Your Name"
                             value={formData.name}
-                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
                             className="w-full p-3 border-2 bg-transparent font-mono"
                             style={{
@@ -83,7 +83,7 @@ export default function Contact() {
                             type="email"
                             placeholder="Your Email"
                             value={formData.email}
-                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
                             className="w-full p-3 border-2 bg-transparent font-mono"
                             style={{
@@ -95,7 +95,7 @@ export default function Contact() {
                         <textarea
                             placeholder="Your Message"
                             value={formData.message}
-                            onChange={(e) => setFormData({...formData, message: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             required
                             rows={4}
                             className="w-full p-3 border-2 bg-transparent font-mono resize-none"
@@ -119,7 +119,7 @@ export default function Contact() {
                     </form>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8, duration: 0.5 }}

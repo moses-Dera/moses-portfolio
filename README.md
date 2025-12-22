@@ -1,36 +1,149 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Moses Chidera Okonkwo - Portfolio Website
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js, featuring geometric design elements, smooth animations, and a contact form with email functionality.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Modern Design**: Geometric clip-path shapes and techy aesthetic
+- **Smooth Animations**: Framer Motion animations throughout the site
+- **Responsive Layout**: Mobile-first design with Tailwind CSS
+- **Interactive Elements**: Hover effects, modal slideshows, and grain background
+- **Contact Form**: Nodemailer integration for direct email sending
+- **Project Showcase**: Modal galleries with keyboard navigation
+- **Theme System**: CSS custom properties for consistent theming
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16.0.10
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Email**: Nodemailer
+- **Fonts**: JetBrains Mono, Fira Code, Inter, Source Code Pro
+- **Icons**: React Icons
+- **Deployment**: Vercel-ready
+
+## 📁 Project Structure
+
+```
+moses-portfolio/
+├── app/
+│   ├── contact/          # Contact page with form
+│   ├── project/          # Projects showcase
+│   ├── skill/            # Skills & expertise
+│   ├── api/contact/      # Email API endpoint
+│   ├── globals.css       # Global styles & CSS variables
+│   ├── layout.tsx        # Root layout with metadata
+│   └── page.tsx          # Homepage
+├── components/
+│   ├── GrainBackground.tsx    # Animated grain texture
+│   ├── navbar.tsx            # Navigation with animations
+│   ├── projectCard.tsx       # Project cards with modals
+│   └── footer.tsx            # Footer component
+├── lib/
+│   └── project.ts            # Project data
+└── public/                   # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Design Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Geometric Elements
+- Custom clip-path polygons for modern shapes
+- Hexagonal skill cards
+- Techy button designs with cut corners
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Animations
+- Page transitions with staggered elements
+- Hover effects with scale and lift
+- Rotating logo on hover
+- Grain background with mouse interaction
 
-## Learn More
+### Responsive Design
+- Mobile-first approach
+- Flexible grid layouts
+- Adaptive typography
+- Touch-friendly interactions
 
-To learn more about Next.js, take a look at the following resources:
+## 📧 Contact Form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The contact form uses Nodemailer to send emails directly to your inbox:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Setup**: Configure environment variables in `.env.local`
+2. **Gmail Integration**: Uses Gmail SMTP with app passwords
+3. **Form Validation**: Client-side validation with loading states
+4. **Success Feedback**: Visual confirmation when message is sent
 
-## Deploy on Vercel
+### Environment Variables
+```env
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Getting Started
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/moses-Dera/moses-portfolio.git
+   cd moses-portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env.local
+   # Edit .env.local with your email credentials
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 📱 Pages
+
+- **Home** (`/`): Introduction with social links and grain background
+- **Skills** (`/skill`): Expertise areas with animated cards
+- **Projects** (`/project`): Portfolio showcase with modal galleries
+- **Contact** (`/contact`): Contact form with social media links
+
+## 🎯 Key Components
+
+### GrainBackground
+- Canvas-based animated texture
+- Mouse interaction effects
+- Theme-aware color adaptation
+
+### ProjectCard
+- Image galleries with modal slideshow
+- Keyboard navigation (arrow keys, escape)
+- Geometric clip-path styling
+
+### Navbar
+- Smooth slide-in animation
+- Hover effects on navigation items
+- Rotating logo interaction
+
+## 🌐 Social Links
+
+- **GitHub**: [moses-Dera](https://github.com/moses-Dera)
+- **LinkedIn**: [m-chidera-okonkwo](https://www.linkedin.com/in/m-chidera-okonkwo/)
+- **Twitter**: [@0x_moze](https://x.com/0x_moze)
+- **Credly**: [moses-okonkwo](https://www.credly.com/users/moses-okonkwo)
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contact
+
+Moses Chidera Okonkwo - okonkwomoses158@gmail.com
+
+Project Link: [https://github.com/moses-Dera/moses-portfolio](https://github.com/moses-Dera/moses-portfolio)

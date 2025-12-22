@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 interface ProjectCardProps {
   name: string;
@@ -21,7 +22,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ name, description, techStack,
   };
 
   const closeModal = () => setIsModalOpen(false);
-  
+
+  const nextImage = React.useCallback(() => {
+    if (images) {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }
+  }, [images]);
+
+  const prevImage = React.useCallback(() => {
+    if (images) {
+      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+  }, [images]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isModalOpen && images) {
@@ -30,31 +43,24 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ name, description, techStack,
         if (e.key === 'Escape') closeModal();
       }
     };
-    
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isModalOpen, images]);
-  
-  const nextImage = () => {
-    if (images) {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }
-  };
-  
-  const prevImage = () => {
-    if (images) {
-      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-    }
-  };
+  }, [isModalOpen, images, nextImage, prevImage]);
 
   return (
     <>
       <div className="bg-(--color-bg border border-(--color-border) p-6 shadow hover:shadow-lg transition-shadow" style={{
         clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))'
       }}>
-        <div className="w-full h-64 bg-gray-200 rounded-lg mb-4 overflow-hidden cursor-pointer" onClick={openModal}>
+        <div className="relative w-full h-64 bg-gray-200 rounded-lg mb-4 overflow-hidden cursor-pointer" onClick={openModal}>
           {image ? (
-            <img src={image} alt={name} className="w-full h-full object-cover hover:scale-105 transition-transform" />
+            <Image
+              src={image}
+              alt={name}
+              fill
+              className="object-cover hover:scale-105 transition-transform"
+            />
           ) : (
             <div className="w-full h-full bg-linear-to-br from-gray-300 to-gray-400 flex items-center justify-center">
               <span className="text-gray-600 text-sm">Project Image</span>
@@ -88,35 +94,36 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ name, description, techStack,
           }}>
             ✕
           </button>
-          
+
           {/* Left navigation button */}
           {images.length > 1 && (
             <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute border-2 left-4 top-1/2 -translate-y-1/2 bg-white/0 backdrop-blur-md hover:bg-white text-white p-4 font-bold z-10 w-10 h-12 flex items-center justify-center" style={{
               clipPath: 'polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%)'
             }}>
-              
+
             </button>
           )}
-          
+
           <div className="relative max-w-6xl max-h-[95vh] p-4" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={images[currentImageIndex]} 
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={images[currentImageIndex]}
               alt={`${name} - Image ${currentImageIndex + 1}`}
               className="max-w-full max-h-full object-contain rounded-lg"
             />
-            
+
             {/* Image counter */}
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
               {currentImageIndex + 1} / {images.length}
             </div>
           </div>
-          
+
           {/* Right navigation button */}
           {images.length > 1 && (
             <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute border-2 right-4 top-1/2 -translate-y-1/2 bg-white/0 backdrop-blur-md hover:bg-white text-white p-4 font-bold z-10 w-10 h-12 flex items-center justify-center" style={{
               clipPath: 'polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%)'
             }}>
-              
+
             </button>
           )}
         </div>
