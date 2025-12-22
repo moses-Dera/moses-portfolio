@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://moses-portfolio.vercel.app'; // Replace with your actual domain
+    const baseUrl = 'https://moz-flame.vercel.app'; // Replace with your actual domain
 
     return [
         {

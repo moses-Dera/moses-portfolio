@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 // Define the base URL for metadata
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? process.env.NEXT_PUBLIC_BASE_URL
-  : 'https://moses-portfolio.vercel.app';
+  : 'https://moz-flame.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
