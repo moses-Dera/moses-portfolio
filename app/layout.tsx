@@ -38,39 +38,22 @@ export const metadata: Metadata = {
   generator: "Next.js",
   keywords: ["Moses Okonkwo", "Full-stack developer", "Software engineer", "Javascript", "Python", "React", "Next.js", "Node.js", "APIs", "Databases", "Web Development", "Frontend", "Backend"],
   creator: "Moses C. Okonkwo",
+
   publisher: "Moses C. Okonkwo",
-  icons: {
-    icon: [
-      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "40x40", type: "image/png" },
-      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "32x32", type: "image/png" },
-      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "192x192", type: "image/png" },
-      { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "512x512", type: "image/png" }
-    ],
-    shortcut: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png",
-    apple: { url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png", sizes: "180x180" },
-  },
   openGraph: {
     title: "Moses C. Okonkwo - Full-Stack Developer",
     description: "Full-stack web developer building robust applications with modern technologies",
     url: baseUrl,
     siteName: "Moses Chidera Okonkwo Portfolio",
     locale: "en_US",
+
     type: "website",
-    images: [
-      {
-        url: "https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png",
-        width: 800,
-        height: 600,
-        alt: "Moses Chidera Okonkwo Logo",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Moses C. Okonkwo - Full-Stack Developer",
     description: "Full-stack web developer building robust applications with modern technologies",
     creator: "@0x_moze",
-    images: ["https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png"],
   },
   alternates: {
     canonical: baseUrl,

@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -20,13 +19,7 @@ export default function Navbar() {
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <Image
-                            src='https://res.cloudinary.com/dn0ipf9zx/image/upload/v1766235159/mozlogo_kqpigs.png'
-                            alt="logo"
-                            width={120}
-                            height={160}
-                            className="p-1 sm:p-2 mt-2 sm:mt-3 -rotate-18 w-20 sm:w-32 h-auto"
-                        />
+                        <span className="text-xl sm:text-3xl font-extrabold font-fira">MOZ</span>
                     </motion.div>
                 </motion.div>
             </Link>
