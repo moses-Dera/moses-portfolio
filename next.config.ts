@@ -6,10 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        port: '',
-        pathname: '/dn0ipf9zx/**',
-        search: '',
+        hostname: '**', // Allow all external https links
       },
     ],
   },

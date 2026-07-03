@@ -36,34 +36,56 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="min-h-screen p-8 flex flex-col items-center justify-center"
+            className="min-h-[calc(100vh-160px)] p-8 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full overflow-hidden"
         >
-            <div className="max-w-2xl mx-auto text-center">
-                <motion.h1
+            {/* Left Side: Header & Text */}
+            <div className="w-full lg:w-1/2 text-left flex flex-col h-full justify-center">
+                <motion.h1 
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-4xl font-bold font-jetbrains mb-8"
+                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-(--color-accent) mb-8"
                 >
-                    Get In Touch
+                    {"// "}CONTACT
                 </motion.h1>
 
-                <p className="text-lg mb-12 leading-relaxed" style={{ color: 'var(--color-text)' }}>
-                    Ready to collaborate on your next project? Let&apos;s discuss how we can build something amazing together.
+                <p className="text-lg lg:text-xl mb-12 leading-relaxed text-zinc-400">
+                    Operating at the intersection of systems engineering and product architecture. Ping me to discuss your next technical challenge.
                 </p>
 
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.5 }}
+                    className="flex gap-6 justify-start mt-4"
+                >
+                    <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer">
+                        <FaGithub size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                    </a>
+                    <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer">
+                        <FaLinkedin size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                    </a>
+                    <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer">
+                        <FaCertificate size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                    </a>
+                    <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer">
+                        <FaTwitter size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                    </a>
+                </motion.div>
+            </div>
+
+            {/* Right Side: Form */}
+            <div className="w-full lg:w-1/2 text-left">
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="backdrop-blur-sm border p-8 hover:bg-white/5 transition-all"
+                    className="backdrop-blur-sm border p-8 lg:p-10 hover:bg-white/5 transition-all border-white/20 rounded-lg w-full"
                     style={{
-                        backgroundColor: 'var(--color-border)',
-                        borderColor: 'var(--color-border)',
-                        clipPath: 'polygon(0 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px))'
+                        backgroundColor: 'rgba(255,255,255,0.02)'
                     }}
                 >
-                    <h2 className="text-2xl font-jetbrains mb-6">Let&apos;s Connect</h2>
+                    <h2 className="text-2xl font-jetbrains mb-6 text-white">Let&apos;s Connect</h2>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
@@ -117,26 +139,6 @@ export default function Contact() {
                             {sending ? 'Sending...' : sent ? 'Message Sent!' : 'Send Message'}
                         </button>
                     </form>
-                </motion.div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.5 }}
-                    className="flex gap-6 justify-center mt-8"
-                >
-                    <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer">
-                        <FaGithub size={28} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
-                    </a>
-                    <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer">
-                        <FaLinkedin size={28} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
-                    </a>
-                    <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer">
-                        <FaCertificate size={28} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
-                    </a>
-                    <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer">
-                        <FaTwitter size={28} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
-                    </a>
                 </motion.div>
             </div>
         </motion.div>

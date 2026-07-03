@@ -86,12 +86,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${fira.variable} ${jetbrains.variable} ${sourceCode.variable} ${robotoMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${fira.variable} ${jetbrains.variable} ${sourceCode.variable} ${robotoMono.variable} antialiased min-h-screen selection:bg-accent selection:text-white flex flex-col relative z-10`}
       >
         <GrainBackground />
         <Navbar />
-        {children}
+        <main className="flex-1 flex flex-col pb-16">
+          {children}
+        </main>
         <Footer />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

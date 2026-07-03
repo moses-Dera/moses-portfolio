@@ -6,44 +6,47 @@ import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa"
 
 export default function Home(){
   return (
-    <div className="h-[80vh] flex flex-col sm:flex-row md:flex-row lg:flex-row">
-      <div className=" flex-2 sm:flex-2 md:flex-2 lg:flex-1 flex flex-col justify-end sm:justify-center items-start lg:items-start p-4 sm:p-4 gap-4"> 
-        <span className=" h-fit sm:h-20 flex flex-col justify-center items-center text-lg sm:text-2xl font-extrabold font-jetbrains lg:text-left ">
-          <div>\\..</div>
+    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative">
+      
+      {/* LEFT COLUMN: Title and Description */}
+      <div className="flex-1 flex flex-col justify-center items-start gap-4 z-10"> 
+        <div className="flex flex-col text-2xl sm:text-4xl md:text-5xl font-extrabold font-jetbrains text-white">
+          <div className="ml-8">{"\\\\.."}</div>
           <div>MOSES C. OKONKWO</div>
-          <div>..\\</div>
-          
-        </span>
-        <span className="font-fira border-b-2 border-double ">Full-stack Software Engineer</span>
-
-        <span className="font-extralight text-sm w-2/3 font-mono  sm:text-sm text-left lg:text-left  lg:px-0  border-b-2 border-double">I build full-stack applications with robust backend systems and clean interfaces.
-          Full-Stack Software Engineer specializing in APIs, databases, and modern frontend frameworks.___-_-___
-        </span>
-      </div>
-      <div className="flex-1 p-5">
-        {/* <div className="h-1/2"></div> */}
-        <div className="h-full flex flex-col gap-4 justify-end items-end sm:items-end">
-          <div className="flex gap-4">
-            <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer">
-              <FaGithub size={24} className="hover:scale-110 transition-transform" />
-            </a>
-            <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer">
-              <FaLinkedin size={24} className="hover:scale-110 transition-transform" />
-            </a>
-            <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer">
-              <FaCertificate size={24} className="hover:scale-110 transition-transform" />
-            </a>
-            <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer">
-              <FaTwitter size={24} className="hover:scale-110 transition-transform" />
-            </a>
-          </div>
-          <button className="font-bold p-1  border-2 hover:border-none 
-          transition-transform
-          clip-path: polygon(28% 0, 100% 0, 100% 35%, 100% 77%, 70% 100%, 0 100%, 0% 70%, 0 32%);
-          ">
-            <Link href="/project">View project</Link>
-          </button>
+          <div className="ml-8">{"..\\\\"}</div>
         </div>
+        
+        <div className="font-fira text-lg sm:text-xl border-b border-white pb-1 text-white inline-block mt-4">
+          Full-stack Software Engineer
+        </div>
+
+        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-zinc-400 leading-relaxed mt-4">
+          I build full-stack applications with robust backend systems and clean interfaces. Full-Stack Software Engineer specializing in APIs, databases, and modern frontend frameworks.<span className="tracking-widest ml-2">---.-.---</span>
+        </p>
+      </div>
+
+      {/* RIGHT COLUMN: Socials and Button (Bottom Right) */}
+      <div className="flex-1 flex flex-col justify-end items-end z-10 pb-4">
+        
+        <div className="flex gap-5 mb-4">
+          <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer" className="text-white hover:text-zinc-400 transition-colors">
+            <FaGithub size={24} />
+          </a>
+          <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-zinc-400 transition-colors">
+            <FaLinkedin size={24} />
+          </a>
+          <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer" className="text-white hover:text-zinc-400 transition-colors">
+            <FaCertificate size={24} />
+          </a>
+          <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer" className="text-white hover:text-zinc-400 transition-colors">
+            <FaTwitter size={24} />
+          </a>
+        </div>
+
+        <button className="font-jetbrains text-sm px-4 py-2 border border-white text-white hover:bg-white hover:text-black transition-colors">
+          <Link href="/project">View project</Link>
+        </button>
+
       </div>
     </div>
   )

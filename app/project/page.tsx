@@ -1,23 +1,37 @@
 import React from 'react';
 import ProjectCard from '@/components/projectCard';
-import { projects } from '@/lib/project';
+import prisma from '@/lib/prisma';
 
-const ProjectsPage = () => {
+export const revalidate = 0; // Ensure data is always fresh
+
+export default async function ProjectsPage() {
+  const projects = await prisma.project.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+
   return (
-    <div className="max-w-6xl mx-auto p-6 grid gap-6 md:grid-cols-2">
-      {projects.map((project) => (
-        <ProjectCard
-          key={project.name}
-          name={project.name}
-          description={project.description}
-          techStack={project.techStack}
-          link={project.link}
-          image={project.image}
-          images={project.images}
-        />
-      ))}
+    <div className="p-6 md:p-12 w-full">
+      <div className="mb-12">
+        <h1 className="text-4xl font-jetbrains font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-(--color-accent) mb-4">
+          {"// "}PROJECTS
+        </h1>
+        <p className="font-mono text-(--color-muted) border-l-2 border-(--color-accent) pl-4">
+          A showcase of systems, architectures, and applications I have engineered.
+        </p>
+      </div>
+
+      <div className="grid gap-8 md:grid-cols-2">
+        {projects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            id={project.id}
+            name={project.title}
+            description={project.description}
+            techStack={project.techStack}
+            image={project.coverImage || undefined}
+          />
+        ))}
+      </div>
     </div>
   );
-};
-
-export default ProjectsPage;
+}
