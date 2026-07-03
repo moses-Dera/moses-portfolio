@@ -119,8 +119,37 @@ export function ProjectForm({ project, onCancel }: { project?: any, onCancel: ()
         </div>
 
         <div>
-          <label className="block text-xs font-mono text-zinc-400 mb-1 uppercase tracking-wider">Case Study Content (Markdown)</label>
-          <textarea {...register('content')} rows={8} className="w-full bg-black/50 border border-white/10 p-2 font-mono text-white text-sm focus:outline-none focus:border-red-500/50" />
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-xs font-mono text-zinc-400 uppercase tracking-wider">Case Study Content (Markdown)</label>
+            <div className="relative">
+              <input 
+                type="file" 
+                id="galleryUpload"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  setUploading(true);
+                  const formData = new FormData();
+                  formData.append('file', file);
+                  const result = await uploadImage(formData);
+                  if (result.url) {
+                    const currentContent = watch('content') || '';
+                    setValue('content', currentContent + `\n\n![Gallery Image](${result.url})`);
+                  } else {
+                    setError(result.error || 'Upload failed');
+                  }
+                  setUploading(false);
+                  e.target.value = ''; // Reset input
+                }} 
+                accept="image/*" 
+                className="hidden" 
+              />
+              <label htmlFor="galleryUpload" className="cursor-pointer px-3 py-1 bg-white/10 hover:bg-white/20 text-white font-mono text-xs border border-white/20 flex items-center gap-2">
+                {uploading ? 'UPLOADING...' : '+ ADD GALLERY IMAGE'}
+              </label>
+            </div>
+          </div>
+          <textarea {...register('content')} rows={8} className="w-full bg-black/50 border border-white/10 p-2 font-mono text-white text-sm focus:outline-none focus:border-red-500/50" placeholder="Write markdown here. Click '+ Add Gallery Image' to auto-insert uploaded images..." />
           {errors.content && <p className="text-red-400 text-xs mt-1">{errors.content.message}</p>}
         </div>
 
