@@ -76,8 +76,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, name, description, techSt
           
           <div className="flex flex-wrap gap-2 mt-auto">
             {techs.map((tech, i) => (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img key={i} src={getShieldUrl(tech)} alt={tech} className="h-6 hover:scale-105 transition-transform" />
+              <div key={i} className="border border-border/30 bg-background/40 p-[2px] transition-all hover:border-(--color-accent)/50 hover:bg-(--color-accent)/10"
+                   style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={getShieldUrl(tech)} alt={tech} className="h-5 md:h-6" />
+              </div>
             ))}
           </div>
         </div>

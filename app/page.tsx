@@ -17,15 +17,12 @@ export default function Home(){
           <div className="ml-8 text-accent">{"..\\\\"}</div>
         </div>
         
-        <div className="font-fira text-lg sm:text-xl border-b border-foreground pb-1 text-foreground inline-block mt-4">
-          Full-stack Software Engineer
+        <div className="font-fira text-lg sm:text-xl border-b-2 border-accent pb-1 text-foreground inline-block mt-4">
+          Software Engineer // Backend & AI Systems
         </div>
 
-        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground/70 leading-relaxed mt-4">
-          I build full-stack applications with robust backend systems<br/>
-          and clean interfaces. Full-Stack Software Engineer<br/>
-          specializing in APIs, databases, and modern frontend<br/>
-          frameworks. {"---.-.---"}
+        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground/70 leading-relaxed mt-6">
+          Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
         </p>
       </div>
 

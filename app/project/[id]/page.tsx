@@ -46,7 +46,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
   const techStack = project.techStack.split(',').map(t => t.trim());
 
   return (
-    <div className="max-w-5xl mx-auto p-6 md:p-12 w-full mt-10 relative z-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10">
       <Link href="/project" className="inline-flex items-center text-(--color-muted) hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
         {"<-- RETURN_TO_PROJECTS"}
       </Link>
@@ -56,62 +56,92 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
         <h1 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-6">
           {project.title}
         </h1>
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-3 mb-8">
           {techStack.map((tech, i) => (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img key={i} src={getShieldUrl(tech)} alt={tech} className="h-7 hover:scale-105 transition-transform" />
+            <div key={i} className="border border-border/40 bg-foreground/5 p-1 transition-all hover:border-(--color-accent)/50 hover:bg-(--color-accent)/10 shadow-sm"
+                 style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={getShieldUrl(tech)} alt={tech} className="h-6 md:h-7" />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Hero Image */}
       {project.coverImage && (
-        <div className="relative w-full h-[400px] md:h-[600px] mb-12 border border-border/50 bg-foreground/5 shadow-[0_0_50px_rgba(59,130,246,0.1)]"
+        <div className="relative w-full max-h-[70vh] mb-12 border border-border/50 bg-foreground/5 shadow-[0_0_50px_rgba(59,130,246,0.1)] flex items-center justify-center overflow-hidden"
              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)' }}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={project.coverImage}
             alt={project.title}
-            fill
-            className="object-cover"
+            className="w-full h-auto max-h-[70vh] object-contain rounded-t-sm"
           />
         </div>
       )}
 
       {/* Case Study Content (Basic Markdown rendering approximation) */}
-      <div className="prose prose-invert prose-lg max-w-none font-sans text-gray-300">
-        {project.content.split('\n\n').map((paragraph, idx) => {
-          if (paragraph.startsWith('## ')) {
-            let headingText = paragraph.replace('## ', '');
-            // Automatically upgrade generic headings to fit the persona
-            if (headingText === 'Screenshots' || headingText === 'Screenshot') {
-                headingText = 'SYSTEM_INTERFACES';
-            }
-            
-            return (
-              <div key={idx} className="flex items-center gap-4 mt-16 mb-8">
-                <span className="text-accent font-bold text-xl font-jetbrains">{"//"}</span>
-                <h2 className="text-2xl md:text-3xl font-jetbrains font-bold text-foreground uppercase">
-                  {headingText}
-                </h2>
-                <div className="flex-1 h-[1px] bg-border/40 ml-4"></div>
-              </div>
-            );
-          }
-          if (paragraph.startsWith('![')) {
-            const url = paragraph.match(/\((.*?)\)/)?.[1];
-            const alt = paragraph.match(/\[(.*?)\]/)?.[1] || "Project image";
-            if (url) {
-              return (
-                <div key={idx} className="my-12 border border-border/50 p-2 bg-foreground/5 shadow-lg"
-                     style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={url} alt={alt} className="w-full h-auto rounded-sm" />
+      <div className="max-w-5xl">
+        <div className="prose prose-invert prose-lg max-w-none font-sans text-gray-300">
+        {(() => {
+          const blocks: React.ReactNode[] = [];
+          const paragraphs = project.content.split('\n\n');
+          let imageGallery: {url: string, alt: string}[] = [];
+
+          const flushGallery = (key: string) => {
+            if (imageGallery.length > 0) {
+              blocks.push(
+                <div key={key} className={`my-12 grid gap-6 ${imageGallery.length === 1 ? 'grid-cols-1' : imageGallery.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+                  {imageGallery.map((img, i) => (
+                    <div key={i} className="group relative border border-border/50 p-2 bg-foreground/5 shadow-lg overflow-hidden h-full flex items-center justify-center"
+                         style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={img.url} alt={img.alt} className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" />
+                    </div>
+                  ))}
                 </div>
               );
+              imageGallery = [];
             }
-          }
-          return <p key={idx} className="mb-6 font-mono text-foreground/80 leading-relaxed text-lg">{paragraph}</p>;
-        })}
+          };
+
+          paragraphs.forEach((paragraph, idx) => {
+            const imgRegex = /!\[(.*?)\]\((.*?)\)/g;
+            const textWithoutImages = paragraph.replace(imgRegex, '').trim();
+
+            if (textWithoutImages.length === 0 && paragraph.includes('![')) {
+              let match;
+              while ((match = imgRegex.exec(paragraph)) !== null) {
+                imageGallery.push({ alt: match[1] || 'Project image', url: match[2] });
+              }
+            } else {
+              flushGallery(`gallery-${idx}`);
+              
+              if (paragraph.startsWith('## ')) {
+                let headingText = paragraph.replace('## ', '');
+                if (headingText === 'Screenshots' || headingText === 'Screenshot') headingText = 'SYSTEM_INTERFACES';
+                blocks.push(
+                  <div key={`h2-${idx}`} className="flex items-center gap-4 mt-16 mb-8">
+                    <span className="text-accent font-bold text-xl font-jetbrains">{"//"}</span>
+                    <h2 className="text-2xl md:text-3xl font-jetbrains font-bold text-foreground uppercase">
+                      {headingText}
+                    </h2>
+                    <div className="flex-1 h-[1px] bg-border/40 ml-4"></div>
+                  </div>
+                );
+              } else {
+                blocks.push(
+                  <p key={`p-${idx}`} className="mb-6 font-mono text-foreground/80 leading-relaxed text-lg">
+                    {paragraph}
+                  </p>
+                );
+              }
+            }
+          });
+
+          flushGallery(`gallery-end`);
+          return blocks;
+        })()}
       </div>
 
       {/* Action Links */}
@@ -130,6 +160,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
             VIEW_SOURCE_CODE
           </a>
         )}
+        </div>
       </div>
     </div>
   );
