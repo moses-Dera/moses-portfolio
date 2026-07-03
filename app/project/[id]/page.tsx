@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
+import LightboxGallery from '@/components/LightboxGallery';
 
 const getShieldUrl = (tech: string) => {
   const t = tech.toLowerCase().trim();
@@ -46,7 +47,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
   const techStack = project.techStack.split(',').map(t => t.trim());
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10">
       <Link href="/project" className="inline-flex items-center text-(--color-muted) hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
         {"<-- RETURN_TO_PROJECTS"}
       </Link>
@@ -90,17 +91,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
 
           const flushGallery = (key: string) => {
             if (imageGallery.length > 0) {
-              blocks.push(
-                <div key={key} className={`my-12 grid gap-6 ${imageGallery.length === 1 ? 'grid-cols-1' : imageGallery.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-                  {imageGallery.map((img, i) => (
-                    <div key={i} className="group relative border border-border/50 p-2 bg-foreground/5 shadow-lg overflow-hidden h-full flex items-center justify-center"
-                         style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={img.url} alt={img.alt} className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-                  ))}
-                </div>
-              );
+              blocks.push(<LightboxGallery key={key} images={imageGallery} />);
               imageGallery = [];
             }
           };
