@@ -8,7 +8,7 @@ export default function Navbar() {
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="z-10 h-[10vh] sticky top-0 left-0 right-0 flex flex-row justify-between items-center px-4 sm:px-8 p-4 bg-background/80 backdrop-blur-md border-b border-border/40"
+            className="z-50 h-[10vh] sticky top-0 left-0 right-0 flex flex-row justify-between items-center px-4 sm:px-8 p-4 bg-background/40 backdrop-blur-xl border-b border-border/40"
         >
             <Link href="/" className="w-1/4">
                 <motion.div

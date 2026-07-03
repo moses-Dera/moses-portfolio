@@ -10,7 +10,7 @@ export default async function ProjectsPage() {
   });
 
   return (
-    <div className="p-6 md:p-12 w-full">
+    <div className="p-6 md:p-12 w-full relative z-10">
       <div className="mb-12">
         <h1 className="text-4xl font-jetbrains font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-(--color-accent) mb-4">
           {"// "}PROJECTS

@@ -36,28 +36,32 @@ export default function GrainBackground() {
 
     const drawGrain = () => {
       const { width, height } = canvas;
-      const time = performance.now() * 0.0005; // Smooth, slow time progression
+      const time = performance.now() * 0.0005; 
       
-      // Interpolate mouse for fluid interaction
       currentMouse.current.x += (targetMouse.current.x - currentMouse.current.x) * 0.05;
       currentMouse.current.y += (targetMouse.current.y - currentMouse.current.y) * 0.05;
 
-      // Dark glassy fade for trails
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; // Using black ensures mix-blend-screen doesn't wash out the underlying background
+      const isDark = document.documentElement.classList.contains('dark');
+      
+      // Hardcode the RGB equivalents of #0B1120 (Dark) and #bcbdb8 (Light) 
+      // Avoids expensive getComputedStyle calls on every frame
+      const bgRgb = isDark ? '11, 17, 32' : '188, 189, 184';
+
+      // Fade for trails matching the background
+      ctx.fillStyle = `rgba(${bgRgb}, 0.09)`; 
       ctx.fillRect(0, 0, width, height);
       
-      ctx.globalCompositeOperation = "lighter";
+      // Use lighter composite for dark mode (glow), source-over for light mode (clean dots)
+      ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
 
-      const grainColor = '180, 200, 255'; // Glassy oceanic blue/white
+      const grainColor = isDark ? '180, 200, 255' : '50, 100, 200'; 
 
       for (let i = 0; i < particles.current.length; i++) {
         const p = particles.current[i];
         
-        // Ocean current math (Sine/Cosine flow field)
         const waveX = Math.sin(p.y * 0.003 + time + p.speedOffset) * 1.5;
         const waveY = Math.cos(p.x * 0.003 + time) * 1.5;
         
-        // Mouse repulsion
         const dx = p.x - currentMouse.current.x;
         const dy = p.y - currentMouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -69,19 +73,17 @@ export default function GrainBackground() {
             repulsionY = (dy / dist) * force * 2;
         }
 
-        // Apply movement
-        p.x += waveX + repulsionX + 0.2; // slight constant drift right
-        p.y += waveY + repulsionY - 0.5; // slight constant drift up (like bubbles/current)
+        p.x += waveX + repulsionX + 0.2; 
+        p.y += waveY + repulsionY - 0.5; 
 
-        // Screen Wrap-around
         if (p.x > width + 10) p.x = -10;
         if (p.x < -10) p.x = width + 10;
         if (p.y > height + 10) p.y = -10;
         if (p.y < -10) p.y = height + 10;
 
-        // Draw the glassy grain
         const pulse = (Math.sin(time * 3 + p.speedOffset) + 1) * 0.5;
-        const alpha = 0.2 + (pulse * 0.4); // Shimmering effect
+        // slightly darker/more opaque in light mode for visibility
+        const alpha = isDark ? 0.2 + (pulse * 0.4) : 0.4 + (pulse * 0.4); 
         
         ctx.fillStyle = `rgba(${grainColor}, ${alpha})`;
         ctx.beginPath();
@@ -89,7 +91,7 @@ export default function GrainBackground() {
         ctx.fill();
       }
       
-      ctx.globalCompositeOperation = "source-over"; // Reset for next frame clear
+      ctx.globalCompositeOperation = "source-over";
 
       animationFrameId.current = requestAnimationFrame(drawGrain);
     };
@@ -121,7 +123,7 @@ export default function GrainBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0 opacity-100 mix-blend-screen"
+      className="pointer-events-none fixed inset-0 z-0 opacity-100"
       style={{ filter: "blur(0.5px)" }} 
     />
   );

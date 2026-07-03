@@ -84,10 +84,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${fira.variable} ${jetbrains.variable} ${sourceCode.variable} ${robotoMono.variable} antialiased min-h-screen selection:bg-accent selection:text-white flex flex-col relative z-10`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${fira.variable} ${jetbrains.variable} ${sourceCode.variable} ${robotoMono.variable} antialiased min-h-screen selection:bg-accent selection:text-white flex flex-col relative z-10 bg-background text-foreground`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var storedTheme = localStorage.getItem('theme');
+                  var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.add('light');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <GrainBackground />
         <Navbar />
         <main className="flex-1 flex flex-col pb-16">

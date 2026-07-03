@@ -12,7 +12,7 @@
 }
 
 .dark {
-  --color-bg: #0B1120;           /* Deep Navy background */
+  --color-bg: #0B1120;           /* Deep Navy background (matches Screenshot 2) */
   --color-text: #FAFAFA;         /* Light text */
   --color-accent: #8B5CF6;       /* Brighter accent for dark bg */
   --color-accent-hover: #A78BFA; /* Hover */
@@ -32,8 +32,10 @@
 }
 
 @theme inline {
-  --background: var(--color-bg);
-  --foreground: var(--color-text);
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-inter: var(--font-inter);
@@ -44,8 +46,8 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-bg);
+  color: var(--color-text);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -60,6 +62,3 @@ body {
   scrollbar-width: none !important;  /* Firefox */
 }
 
-html, body {
-  /* Let normal browser scroll handle overflow so position: sticky works! */
-}

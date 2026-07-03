@@ -39,17 +39,17 @@ export default function Contact() {
             className="min-h-[calc(100vh-160px)] p-8 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full overflow-hidden"
         >
             {/* Left Side: Header & Text */}
-            <div className="w-full lg:w-1/2 text-left flex flex-col h-full justify-center">
+            <div className="w-full lg:w-1/2 text-left flex flex-col h-full justify-center relative z-10">
                 <motion.h1 
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-(--color-accent) mb-8"
+                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-accent mb-8"
                 >
                     {"// "}CONTACT
                 </motion.h1>
 
-                <p className="text-lg lg:text-xl mb-12 leading-relaxed text-zinc-400">
+                <p className="text-lg lg:text-xl mb-12 leading-relaxed text-foreground/70">
                     Operating at the intersection of systems engineering and product architecture. Ping me to discuss your next technical challenge.
                 </p>
 
@@ -80,12 +80,9 @@ export default function Contact() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="backdrop-blur-sm border p-8 lg:p-10 hover:bg-white/5 transition-all border-white/20 rounded-lg w-full"
-                    style={{
-                        backgroundColor: 'rgba(255,255,255,0.02)'
-                    }}
+                    className="backdrop-blur-sm border p-8 lg:p-10 hover:bg-foreground/5 transition-all border-border rounded-lg w-full bg-foreground/5"
                 >
-                    <h2 className="text-2xl font-jetbrains mb-6 text-white">Let&apos;s Connect</h2>
+                    <h2 className="text-2xl font-jetbrains mb-6 text-foreground">Let&apos;s Connect</h2>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input

@@ -45,9 +45,9 @@ export default function Footer() {
     };
 
     return (
-        <footer className="fixed bottom-0 w-full p-4 text-center flex justify-between items-center border-t border-white/20 bg-background/80 backdrop-blur-md z-50">
+        <footer className="fixed bottom-0 w-full p-4 text-center flex justify-between items-center border-t border-border bg-background/80 backdrop-blur-md z-50">
             <div className="flex-1"></div> {/* Spacer for centering */}
-            <p className="font-fira text-sm text-zinc-400">&copy; {new Date().getFullYear()} MOZ. All rights reserved.</p>
+            <p className="font-fira text-sm text-foreground/70">&copy; {new Date().getFullYear()} MOZ. All rights reserved.</p>
             <div className="flex-1 flex justify-end pr-4">
                 <button 
                     onClick={toggleTheme} 
