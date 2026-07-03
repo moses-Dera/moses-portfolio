@@ -3,27 +3,34 @@ import Image from 'next/image';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { SiReact, SiTypescript, SiVite, SiTailwindcss, SiNodedotjs, SiExpress, SiMongodb, SiNextdotjs, SiJavascript, SiPostgresql, SiPython, SiPrisma, SiDocker, SiRedis, SiFramer, SiGit } from 'react-icons/si';
 
-const getTechIcon = (tech: string) => {
-  const t = tech.toLowerCase();
-  if (t.includes('react')) return <SiReact className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('typescript')) return <SiTypescript className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('vite')) return <SiVite className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('tailwind')) return <SiTailwindcss className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('node')) return <SiNodedotjs className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('express')) return <SiExpress className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('mongo')) return <SiMongodb className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('next')) return <SiNextdotjs className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('javascript')) return <SiJavascript className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('postgres')) return <SiPostgresql className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('python')) return <SiPython className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('prisma')) return <SiPrisma className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('docker')) return <SiDocker className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('redis')) return <SiRedis className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('framer')) return <SiFramer className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  if (t.includes('git')) return <SiGit className="inline mr-2 text-[1.1em] mb-[2px]" />;
-  return null;
+const getShieldUrl = (tech: string) => {
+  const t = tech.toLowerCase().trim();
+  let logo = encodeURIComponent(t);
+  let color = '1E1E2E';
+  
+  if (t.includes('react')) { logo = 'react'; color = '61DAFB'; }
+  else if (t.includes('typescript')) { logo = 'typescript'; color = '3178C6'; }
+  else if (t.includes('vite')) { logo = 'vite'; color = '646CFF'; }
+  else if (t.includes('tailwind')) { logo = 'tailwindcss'; color = '06B6D4'; }
+  else if (t.includes('node')) { logo = 'node.js'; color = '339933'; }
+  else if (t.includes('express')) { logo = 'express'; color = '000000'; }
+  else if (t.includes('mongo')) { logo = 'mongodb'; color = '47A248'; }
+  else if (t.includes('next')) { logo = 'next.js'; color = '000000'; }
+  else if (t.includes('javascript')) { logo = 'javascript'; color = 'F7DF1E'; }
+  else if (t.includes('postgres')) { logo = 'postgresql'; color = '4169E1'; }
+  else if (t.includes('python')) { logo = 'python'; color = '3776AB'; }
+  else if (t.includes('prisma')) { logo = 'prisma'; color = '2D3748'; }
+  else if (t.includes('docker')) { logo = 'docker'; color = '2496ED'; }
+  else if (t.includes('redis')) { logo = 'redis'; color = 'DC382D'; }
+  else if (t.includes('framer')) { logo = 'framer'; color = '0055FF'; }
+  else if (t.includes('git')) { logo = 'git'; color = 'F05032'; }
+  else if (t.includes('shadcn')) { logo = 'shadcnui'; color = '000000'; }
+  else if (t.includes('html')) { logo = 'html5'; color = 'E34F26'; }
+  else if (t.includes('css')) { logo = 'css3'; color = '1572B6'; }
+
+  const label = encodeURIComponent(tech.trim());
+  return `https://img.shields.io/badge/${label}-${color}?style=for-the-badge&logo=${logo}&logoColor=white`;
 };
 
 export default async function ProjectCaseStudy({ params }: { params: Promise<{ id: string }> }) {
@@ -49,13 +56,10 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
         <h1 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-6">
           {project.title}
         </h1>
-        <div className="flex flex-wrap gap-3 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           {techStack.map((tech, i) => (
-            <span key={i} className="flex items-center text-sm font-mono text-(--color-accent) bg-(--color-accent)/10 px-3 py-1 border border-(--color-accent)/20"
-                  style={{ clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))' }}>
-              {getTechIcon(tech)}
-              {tech}
-            </span>
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img key={i} src={getShieldUrl(tech)} alt={tech} className="h-7 hover:scale-105 transition-transform" />
           ))}
         </div>
       </div>
