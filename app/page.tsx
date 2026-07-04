@@ -3,9 +3,18 @@
 import Link from "next/link"
 import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa"
 import { motion } from "framer-motion"
-
+import { useState, useEffect } from "react"
+import { getResumeUrl } from "./actions"
 
 export default function Home(){
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    getResumeUrl().then(url => {
+      if (url) setResumeUrl(url);
+    });
+  }, []);
+
   return (
     <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative">
       
@@ -52,9 +61,16 @@ export default function Home(){
           </motion.div>
         </div>
 
-        <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors">
-          <Link href="/project">View project</Link>
-        </button>
+        <div className="flex gap-4">
+          {resumeUrl && (
+            <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border border-accent text-accent hover:bg-accent hover:text-black transition-colors">
+              Download Resume
+            </a>
+          )}
+          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors">
+            <Link href="/project">View project</Link>
+          </button>
+        </div>
       </div>
     </div>
   )

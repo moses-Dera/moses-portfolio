@@ -1,5 +1,8 @@
 "use client"
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { getResumeUrl } from "@/app/actions";
+
 interface Skill {
   id: string;
   category: string;
@@ -53,6 +56,14 @@ const getShieldUrl = (tech: string) => {
 };
 
 export default function SkillList({ skills }: { skills: Skill[] }) {
+    const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        getResumeUrl().then(url => {
+            if (url) setResumeUrl(url);
+        });
+    }, []);
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -125,24 +136,26 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                 })}
             </div>
 
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="mt-16 flex flex-row justify-end items-center"
-            >
-                <a 
-                    href="https://docs.google.com/document/d/e/2PACX-1vSOShDb0gpP72mjfOVAZn_Ihv3YII7O3IdCmaVAu_ppQLF00ZbXJ7KrTx-hCTLJvNhVSDyfARtrV2vj/pub" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group relative inline-flex items-center gap-4 px-10 py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
-                    style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
+            {resumeUrl && (
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="mt-16 flex flex-row justify-end items-center"
                 >
-                    <span className="tracking-widest">{"//"} EXTRACT_RESUME</span>
-                    <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
-                </a>
-            </motion.div>
+                    <a 
+                        href={resumeUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group relative inline-flex items-center gap-4 px-10 py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
+                        style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
+                    >
+                        <span className="tracking-widest">{"//"} EXTRACT_RESUME</span>
+                        <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
+                    </a>
+                </motion.div>
+            )}
         </motion.div>
     )
 }

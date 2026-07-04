@@ -59,6 +59,14 @@ export function AdminDashboard() {
             <p className="text-zinc-500 font-mono text-sm">Update timeline, roles, and company details.</p>
           </div>
         </Link>
+
+        {/* Resume Module */}
+        <Link href="/moze-cmd-center/resume">
+          <div className="border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group h-full">
+            <h2 className="text-xl font-bold mb-2 group-hover:text-red-400 transition-colors">Manage Resume</h2>
+            <p className="text-zinc-500 font-mono text-sm">Upload and manage your PDF resume.</p>
+          </div>
+        </Link>
       </div>
 
       <div className="mt-12 p-4 border border-white/10 bg-black/50">
