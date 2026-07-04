@@ -16,6 +16,7 @@ export default function GrainBackground() {
     size: number;
     speedOffset: number;
     phase: number;   // individual wave phase offset
+    history: Array<{x: number, y: number}>;
   }>>([]);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export default function GrainBackground() {
           size: Math.random() * 1.5 + 0.4,
           speedOffset: Math.random() * 100,
           phase: Math.random() * Math.PI * 2,
+          history: [],
         });
       }
     };
@@ -55,11 +57,8 @@ export default function GrainBackground() {
 
       const isDark = document.documentElement.classList.contains('dark');
 
-      // Use destination-out to gradually fade the previous frame to transparent.
-      // This creates beautiful lingering trails WITHOUT eating up the CSS background color!
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; // The alpha controls trail length (lower = longer linger)
-      ctx.fillRect(0, 0, width, height);
+      // Fully clear the canvas. No ghosting, no color mismatch.
+      ctx.clearRect(0, 0, width, height);
 
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       // Use a darker blue-grey for light mode so the ocean lines actually show up
@@ -93,9 +92,11 @@ export default function GrainBackground() {
         const returnX = (p.originX - p.x) * returnStrength;
         const returnY = (p.originY - p.y) * returnStrength;
 
-        // Keep track of previous position for drawing streaks
-        const prevX = p.x;
-        const prevY = p.y;
+        // Save history for trails
+        p.history.push({ x: p.x, y: p.y });
+        if (p.history.length > 15) { // Trail length
+          p.history.shift();
+        }
 
         p.x += wave1X + wave2X + repX + returnX;
         p.y += wave1Y + wave2Y + repY + returnY;
@@ -106,19 +107,44 @@ export default function GrainBackground() {
         if (p.x < -20)         { p.x = width + 20; p.originX = p.x; wrapped = true; }
         if (p.y > height + 20) { p.y = -20;    p.originY = p.y; wrapped = true; }
         if (p.y < -20)         { p.y = height + 20; p.originY = p.y; wrapped = true; }
+        
+        if (wrapped) p.history = [];
 
         // Pulsing brightness — slow like ocean bioluminescence
         const pulse = (Math.sin(time * 2.0 + p.phase) + 1) * 0.5;
-        const alpha = isDark
-          ? 0.15 + (pulse * 0.45)
-          : 0.25 + (pulse * 0.50); // Higher max opacity for light mode to maintain contrast
+        const maxAlpha = isDark ? 0.2 + (pulse * 0.4) : 0.3 + (pulse * 0.5);
 
-        // Draw particle (destination-out handles the fading trails automatically now)
-        ctx.fillStyle = `rgba(${grainColor}, ${alpha})`;
+        // Draw perfect trailing tail manually
+        if (p.history.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(p.history[0].x, p.history[0].y);
+          for (let j = 1; j < p.history.length; j++) {
+            ctx.lineTo(p.history[j].x, p.history[j].y);
+          }
+          ctx.lineTo(p.x, p.y);
+          
+          // Use a gradient to make the tail fade out perfectly
+          const dxTrail = p.x - p.history[0].x;
+          const dyTrail = p.y - p.history[0].y;
+          if (Math.abs(dxTrail) > 0.1 || Math.abs(dyTrail) > 0.1) {
+            const grad = ctx.createLinearGradient(p.history[0].x, p.history[0].y, p.x, p.y);
+            grad.addColorStop(0, `rgba(${grainColor}, 0)`);
+            grad.addColorStop(1, `rgba(${grainColor}, ${maxAlpha})`);
+            ctx.strokeStyle = grad;
+          } else {
+            ctx.strokeStyle = `rgba(${grainColor}, ${maxAlpha})`;
+          }
+          
+          ctx.lineWidth = p.size;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        }
+
+        // Draw head particle
+        ctx.fillStyle = `rgba(${grainColor}, ${maxAlpha * 1.5})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size * 1.2, 0, Math.PI * 2);
         ctx.fill();
-
       }
 
       ctx.globalCompositeOperation = "source-over";
