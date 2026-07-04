@@ -2,12 +2,11 @@
 
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 
 async function checkAuth() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get('moze_admin_session');
-  if (!session?.value) {
+  const session = await getSession();
+  if (!session) {
     throw new Error('Unauthorized');
   }
 }
