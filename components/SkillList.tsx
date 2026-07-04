@@ -77,8 +77,9 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.4, duration: 0.5 }}
-                        className="flex flex-row items-center order-2 sm:order-1"
+                        className="flex flex-row items-center gap-4 order-2 sm:order-1 flex-wrap justify-end sm:justify-start"
                     >
+                        {/* VIEW BUTTON */}
                         <a 
                             href={resumeUrl} 
                             target="_blank" 
@@ -86,8 +87,21 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                             className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
                             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
                         >
-                            <span className="tracking-widest">{"//"} DOWNLOAD_RESUME</span>
+                            <span className="tracking-widest">{"//"} VIEW_RESUME</span>
                             <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
+                        </a>
+
+                        {/* DOWNLOAD BUTTON */}
+                        <a 
+                            href={resumeUrl} 
+                            download="Moses_Okonkwo_Resume.pdf"
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-foreground/5 border border-foreground/30 text-foreground font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-foreground hover:text-background shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                            style={{ clipPath: 'polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px)' }}
+                        >
+                            <span className="tracking-widest">{"//"} DOWNLOAD_RESUME</span>
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         </a>
                     </motion.div>
                 ) : (
