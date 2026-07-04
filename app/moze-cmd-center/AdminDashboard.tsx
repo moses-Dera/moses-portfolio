@@ -44,6 +44,14 @@ export function AdminDashboard() {
           </div>
         </Link>
 
+        {/* Skills Module */}
+        <Link href="/moze-cmd-center/skills">
+          <div className="border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group h-full">
+            <h2 className="text-xl font-bold mb-2 group-hover:text-red-400 transition-colors">Manage Skills</h2>
+            <p className="text-zinc-500 font-mono text-sm">Add or edit your tech stack proficiencies.</p>
+          </div>
+        </Link>
+
         {/* Experience Module */}
         <Link href="/moze-cmd-center/experience">
           <div className="border border-white/10 p-6 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer group h-full">
