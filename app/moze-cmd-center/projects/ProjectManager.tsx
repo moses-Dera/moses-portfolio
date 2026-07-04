@@ -5,7 +5,9 @@ import { ProjectForm } from './ProjectForm';
 import { deleteProject } from './actions';
 import { useRouter } from 'next/navigation';
 
-export function ProjectManager({ initialProjects }: { initialProjects: any[] }) {
+import { Project } from '@prisma/client';
+
+export function ProjectManager({ initialProjects }: { initialProjects: Project[] }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const router = useRouter();

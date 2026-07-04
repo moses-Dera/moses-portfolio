@@ -1,3 +1,4 @@
+import { Skill } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import { createSkill, deleteSkill } from './actions';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ export default async function ManageSkillsPage() {
   }
 
   // Fallback to empty array if DB schema isn't fully migrated yet
-  let skills: any[] = [];
+  let skills: Skill[] = [];
   try {
     skills = await prisma.skill.findMany({
       orderBy: { createdAt: 'desc' }
@@ -78,7 +79,7 @@ export default async function ManageSkillsPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {skills.map((skill: any) => (
+              {skills.map((skill) => (
                 <div key={skill.id} className="border border-border/40 bg-background p-4 flex justify-between items-center hover:border-accent/50 transition-colors group">
                   <div>
                     <h3 className="text-lg font-bold font-jetbrains text-foreground">{skill.name}</h3>

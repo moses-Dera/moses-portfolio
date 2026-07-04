@@ -37,7 +37,7 @@ export async function uploadImage(formData: FormData) {
       });
 
       // @ts-ignore - Bypass IDE type caching issue where .send is sometimes not recognized on S3Client
-      await (s3Client as any).send(new PutObjectCommand({
+      await s3Client.send(new PutObjectCommand({
         Bucket: process.env.R2_BUCKET_NAME,
         Key: filename,
         Body: buffer,
@@ -48,9 +48,9 @@ export async function uploadImage(formData: FormData) {
       // e.g. R2_PUBLIC_URL="https://cdn.myportfolio.com"
       const publicDomain = process.env.R2_PUBLIC_URL || `https://${process.env.R2_BUCKET_NAME}.r2.cloudflarestorage.com`;
       return { url: `${publicDomain}/${filename}` };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("R2 Upload Error:", error);
-      return { error: "Failed to upload to Cloudflare R2: " + error.message };
+      return { error: "Failed to upload to Cloudflare R2: " + (error as Error).message };
     }
   } 
   // Fallback to local upload for development if R2 isn't configured
@@ -61,7 +61,16 @@ export async function uploadImage(formData: FormData) {
   }
 }
 
-export async function saveProject(data: any) {
+export async function saveProject(data: {
+  id?: string;
+  title: string;
+  description: string;
+  coverImage?: string | null;
+  repoUrl?: string | null;
+  liveUrl?: string | null;
+  techStack: string;
+  content: string;
+}) {
   const session = await getSession();
   if (!session) return { error: "Unauthorized" };
 
@@ -96,8 +105,8 @@ export async function saveProject(data: any) {
     revalidatePath('/project');
     revalidatePath('/moze-cmd-center/projects');
     return { success: true };
-  } catch (error: any) {
-    return { error: error.message };
+  } catch (error: unknown) {
+    return { error: (error as Error).message };
   }
 }
 
@@ -110,7 +119,7 @@ export async function deleteProject(id: string) {
     revalidatePath('/project');
     revalidatePath('/moze-cmd-center/projects');
     return { success: true };
-  } catch (error: any) {
-    return { error: error.message };
+  } catch (error: unknown) {
+    return { error: (error as Error).message };
   }
 }

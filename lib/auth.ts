@@ -1,10 +1,10 @@
-import { jwtVerify, SignJWT } from 'jose';
+import { jwtVerify, SignJWT, JWTPayload } from 'jose';
 import { cookies } from 'next/headers';
 
 const secretKey = process.env.JWT_SECRET_KEY || 'super-secret-fallback-key-for-dev';
 const key = new TextEncoder().encode(secretKey);
 
-export async function encrypt(payload: any) {
+export async function encrypt(payload: JWTPayload) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -12,7 +12,7 @@ export async function encrypt(payload: any) {
     .sign(key);
 }
 
-export async function decrypt(input: string): Promise<any> {
+export async function decrypt(input: string): Promise<JWTPayload> {
   const { payload } = await jwtVerify(input, key, {
     algorithms: ['HS256'],
   });

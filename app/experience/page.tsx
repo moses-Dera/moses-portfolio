@@ -1,6 +1,7 @@
 import React from 'react';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
+import { Experience } from '@prisma/client';
 
 export const metadata = {
   title: 'Experience | Moses C. Okonkwo',
@@ -8,7 +9,7 @@ export const metadata = {
 };
 
 export default async function ExperiencePage() {
-  let experiences: any[] = [];
+  let experiences: Experience[] = [];
   
   try {
     experiences = await prisma.experience.findMany({

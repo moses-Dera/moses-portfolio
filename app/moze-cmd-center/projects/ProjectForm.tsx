@@ -20,7 +20,9 @@ const projectSchema = z.object({
 
 type ProjectSchema = z.infer<typeof projectSchema>;
 
-export function ProjectForm({ project, onCancel }: { project?: any, onCancel: () => void }) {
+import { Project } from '@prisma/client';
+
+export function ProjectForm({ project, onCancel }: { project?: Project, onCancel: () => void }) {
   const [error, setError] = useState('');
   const [uploading, setUploading] = useState(false);
   const router = useRouter();

@@ -76,7 +76,7 @@ export default async function ManageExperiencePage() {
               No experience records found.
             </div>
           ) : (
-            experiences.map((exp: any) => (
+            experiences.map((exp) => (
               <div key={exp.id} className="border border-border/40 bg-background p-6 hover:border-accent/50 transition-colors group">
                 <div className="flex justify-between items-start mb-4">
                   <div>
