@@ -9,6 +9,7 @@ export default function Footer() {
         // On mount, check if there's a stored preference or system preference
         const storedTheme = localStorage.getItem("theme");
         if (storedTheme === "light") {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsDark(false);
             document.documentElement.classList.add("light");
             document.documentElement.classList.remove("dark");

@@ -32,6 +32,7 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
     handleSubmit,
     setValue,
     watch,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<ProjectSchema>({
     resolver: zodResolver(projectSchema),
@@ -105,6 +106,7 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
         <div>
           <label className="block text-xs font-mono text-zinc-400 mb-1 uppercase tracking-wider">Cover Image</label>
           <div className="flex gap-4 items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             {coverImage && <img src={coverImage} alt="Cover" className="h-12 w-20 object-cover border border-white/10" />}
             <div className="flex-1">
               <input type="file" onChange={handleFileUpload} accept="image/*" className="text-xs font-mono text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:font-mono file:bg-white/10 file:text-white hover:file:bg-white/20 cursor-pointer" />
@@ -140,7 +142,7 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
                   formData.append('file', file);
                   const result = await uploadImage(formData);
                   if (result.url) {
-                    const currentContent = watch('content') || '';
+                    const currentContent = getValues('content') || '';
                     setValue('content', currentContent + `\n\n![Gallery Image](${result.url})`);
                   } else {
                     setError(result.error || 'Upload failed');

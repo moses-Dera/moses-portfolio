@@ -36,7 +36,6 @@ export async function uploadImage(formData: FormData) {
         },
       });
 
-      // @ts-ignore - Bypass IDE type caching issue where .send is sometimes not recognized on S3Client
       await s3Client.send(new PutObjectCommand({
         Bucket: process.env.R2_BUCKET_NAME,
         Key: filename,

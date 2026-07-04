@@ -112,6 +112,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                             
                             <div className={`flex flex-wrap gap-2 ${isLeft ? '' : 'justify-end'}`}>
                                 {badges.map((badge: string, i: number) => (
+                                    /* eslint-disable-next-line @next/next/no-img-element */
                                     <img key={i} src={getShieldUrl(badge)} alt={badge} />
                                 ))}
                             </div>

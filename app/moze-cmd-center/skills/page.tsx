@@ -21,7 +21,7 @@ export default async function ManageSkillsPage() {
     skills = await prisma.skill.findMany({
       orderBy: { createdAt: 'desc' }
     });
-  } catch (error) {
+  } catch {
     console.warn("Skill model might not be pushed to DB yet.");
   }
 
@@ -60,7 +60,7 @@ export default async function ManageSkillsPage() {
             </div>
 
             <div>
-              <label className="block font-mono text-xs text-foreground/70 mb-1">ORDER (e.g. 1 for '01')</label>
+              <label className="block font-mono text-xs text-foreground/70 mb-1">ORDER (e.g. 1 for &apos;01&apos;)</label>
               <input name="order" type="number" min="1" defaultValue="1" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
             </div>
 

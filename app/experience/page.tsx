@@ -62,11 +62,11 @@ export default async function ExperiencePage() {
 
         {experiences.length === 0 ? (
           <div className="text-foreground/50 font-mono ml-16">
-            // Archiving career data...
+            {"// Archiving career data..."}
           </div>
         ) : (
           <div className="space-y-16">
-            {experiences.map((exp, index) => (
+            {experiences.map((exp) => (
               <div key={exp.id} className="relative flex items-start group">
                 {/* Glowing Node */}
                 <div className="absolute left-[13px] md:left-[23px] top-6 w-4 h-4 rounded-full bg-background border-[3px] border-(--color-accent) shadow-[0_0_15px_rgba(59,130,246,0.6)] z-10 group-hover:scale-125 transition-transform duration-300"></div>

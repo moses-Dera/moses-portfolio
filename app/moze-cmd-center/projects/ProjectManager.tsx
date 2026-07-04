@@ -47,7 +47,10 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
               <>
                 <div className="flex gap-6 items-center flex-1">
                   {project.coverImage ? (
-                    <img src={project.coverImage} alt={project.title} className="w-24 h-16 object-cover border border-white/10" />
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={project.coverImage} alt={project.title} className="w-24 h-16 object-cover border border-white/10" />
+                    </>
                   ) : (
                     <div className="w-24 h-16 bg-white/5 border border-white/10 flex items-center justify-center">
                       <span className="text-zinc-600 font-mono text-xs">NO IMG</span>
