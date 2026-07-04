@@ -21,7 +21,7 @@ export default async function ManageProjectsPage() {
               PROJECT_DATABASE
             </h1>
             <p className="font-mono text-sm text-foreground/50 mt-2 uppercase tracking-widest">
-              Live Schema Editor
+              System Schema Editor
             </p>
           </div>
           <Link href="/moze-cmd-center" className="font-mono text-sm text-foreground hover:text-accent transition-colors border border-border/40 px-4 py-2 hover:bg-foreground/5">
