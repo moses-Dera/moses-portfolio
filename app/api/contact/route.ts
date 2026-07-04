@@ -14,8 +14,9 @@ export async function POST(request: NextRequest) {
     });
 
     const mailOptions = {
-      from: email,
+      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
       to: 'okonkwomoses158@gmail.com',
+      replyTo: email,
       subject: `Portfolio Contact from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
