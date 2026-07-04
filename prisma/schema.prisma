@@ -29,3 +29,13 @@ model Experience {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String
+  category    String   // e.g. "Backend", "Infrastructure", "Frontend"
+  proficiency Int      // e.g. 1-100 percentage for a skill bar (optional)
+  iconUrl     String?  // Optional SVG or image icon
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

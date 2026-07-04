@@ -45,7 +45,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
     notFound();
   }
 
-  const techStack = project.techStack.split(',').map(t => t.trim());
+  const techStack = project.techStack.split(',').map((t: string) => t.trim());
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10">
