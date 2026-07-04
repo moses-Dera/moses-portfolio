@@ -1,56 +1,95 @@
 "use client"
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
+    const [isOpen, setIsOpen] = useState(false);
+    const pathname = usePathname();
+
+    // Close mobile menu when navigating
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname]);
+
     return (
-        <motion.nav
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="z-50 h-[10vh] sticky top-0 left-0 right-0 flex flex-row justify-between items-center px-4 sm:px-8 p-4 bg-background/40 backdrop-blur-xl border-b border-border/40"
-        >
-            <Link href="/" className="w-1/4">
-                <motion.div
+        <>
+            <motion.nav
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="z-50 h-[10vh] sticky top-0 left-0 right-0 flex flex-row justify-between items-center px-4 sm:px-8 p-4 bg-background/40 backdrop-blur-xl border-b border-border/40"
+            >
+                <Link href="/" className="flex-shrink-0 z-50">
+                    <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="text-xl sm:text-3xl font-extrabold font-fira flex justify-start items-center"
+                    className="flex justify-start items-center"
                 >
                     <motion.div
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.5 }}
+                        whileHover={{ rotate: 90 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex flex-col items-start font-fira text-(--color-accent) leading-[0.85] font-bold text-sm sm:text-base"
                     >
-                        <span className="text-xl sm:text-3xl font-extrabold font-fira">M.</span>
+                        <span className="translate-x-[2px] -translate-y-[2px] whitespace-pre">{` \\\\..`}</span>
+                        <span className="whitespace-pre">{`..\\\\`}</span>
                     </motion.div>
                 </motion.div>
-            </Link>
-            <div className="w-3/4 flex flex-row justify-end items-center gap-1 sm:gap-2">
-                <ul className="flex flex-row justify-end items-center gap-4 sm:gap-6" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-                    <motion.li
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className="text-sm sm:text-xl font-light border-2 border-dashed hover:border-none p-1"
+                </Link>
+
+                {/* Desktop Links */}
+                <div className="hidden sm:flex flex-row justify-end items-center w-full ml-4">
+                    <ul className="flex flex-row justify-end items-center gap-6 ml-auto" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                            <Link href="/skill">Skills</Link>
+                        </motion.li>
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                            <Link href="/experience">Experience</Link>
+                        </motion.li>
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                            <Link href="/project">Projects</Link>
+                        </motion.li>
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-b-2 border-dashed hover:border-none p-2">
+                            <Link href="/contact">Contact</Link>
+                        </motion.li>
+                    </ul>
+                </div>
+
+                {/* Mobile Menu Toggle */}
+                <div className="sm:hidden flex items-center z-50">
+                    <button onClick={() => setIsOpen(!isOpen)} className="text-2xl text-foreground focus:outline-none">
+                        {isOpen ? <FiX /> : <FiMenu />}
+                    </button>
+                </div>
+            </motion.nav>
+
+            {/* Mobile Full-Screen Overlay */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col items-center justify-center sm:hidden"
                     >
-                        <Link href="/skill">Skills</Link>
-                    </motion.li>
-                    <motion.li
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className="text-sm sm:text-xl font-light border-2 border-dashed hover:border-none p-1"
-                    >
-                        <Link href="/experience">Experience</Link>
-                    </motion.li>
-                    <motion.li
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className="text-sm sm:text-xl font-light border-2 border-dashed hover:border-none p-1"
-                    >
-                        <Link href="/project">Projects</Link>
-                    </motion.li>
-                    <motion.li
-                        whileHover={{ scale: 1.1, y: -2 }}
-                        className="text-sm sm:text-xl font-light border-2 border-b-2 border-dashed hover:border-none p-1"
-                    >
-                        <Link href="/contact">Contact</Link>
-                    </motion.li>
-                </ul>
-            </div>
-        </motion.nav>
-    )
+                        <ul className="flex flex-col items-center gap-8" style={{ fontFamily: 'var(--font-jetbrains)' }}>
+                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
+                                <Link href="/skill">Skills</Link>
+                            </motion.li>
+                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
+                                <Link href="/experience">Experience</Link>
+                            </motion.li>
+                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
+                                <Link href="/project">Projects</Link>
+                            </motion.li>
+                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
+                                <Link href="/contact">Contact</Link>
+                            </motion.li>
+                        </ul>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
+    );
 }
