@@ -52,8 +52,9 @@ export default function GrainBackground() {
       const { width, height } = canvas;
       const time = performance.now() * 0.00025;
 
-      currentMouse.current.x += (targetMouse.current.x - currentMouse.current.x) * 0.04;
-      currentMouse.current.y += (targetMouse.current.y - currentMouse.current.y) * 0.04;
+      // Slower mouse interpolation creates a "drag" effect through water
+      currentMouse.current.x += (targetMouse.current.x - currentMouse.current.x) * 0.015;
+      currentMouse.current.y += (targetMouse.current.y - currentMouse.current.y) * 0.015;
 
       const isDark = document.documentElement.classList.contains('dark');
 
@@ -68,33 +69,34 @@ export default function GrainBackground() {
         const p = particles.current[i];
 
         // --- Ocean wave movement ---
-        // Two overlapping sinusoidal waves at different scales = rolling ocean
-        const wave1X = Math.sin(p.y * 0.004 + time * 1.1 + p.phase) * 2.0;
-        const wave1Y = Math.cos(p.x * 0.004 + time * 0.9 + p.phase) * 1.5;
-        const wave2X = Math.sin(p.x * 0.007 + time * 1.6 + p.speedOffset) * 0.8;
-        const wave2Y = Math.cos(p.y * 0.007 + time * 1.4 + p.speedOffset) * 0.8;
+        // Slower, more languid rolling ocean
+        const wave1X = Math.sin(p.y * 0.004 + time * 1.1 + p.phase) * 0.8;
+        const wave1Y = Math.cos(p.x * 0.004 + time * 0.9 + p.phase) * 0.6;
+        const wave2X = Math.sin(p.x * 0.007 + time * 1.6 + p.speedOffset) * 0.3;
+        const wave2Y = Math.cos(p.y * 0.007 + time * 1.4 + p.speedOffset) * 0.3;
 
         // --- Mouse repulsion bubble ---
         const dx = p.x - currentMouse.current.x;
         const dy = p.y - currentMouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const repulseRadius = 180;
+        const repulseRadius = 250; // Wider, softer bubble
         let repX = 0, repY = 0;
         if (dist < repulseRadius && dist > 0) {
-          const force = Math.pow((repulseRadius - dist) / repulseRadius, 2) * 3.5;
+          const force = Math.pow((repulseRadius - dist) / repulseRadius, 2) * 1.2; // Softer push
           repX = (dx / dist) * force;
           repY = (dy / dist) * force;
         }
 
         // --- Gentle return-to-origin (ocean current pulling back) ---
-        // This is the key: a soft spring force pulling each particle home
-        const returnStrength = 0.008;
+        // Very slow spring force so the void lingers like deep water
+        const returnStrength = 0.002;
         const returnX = (p.originX - p.x) * returnStrength;
         const returnY = (p.originY - p.y) * returnStrength;
 
         // Save history for trails
         p.history.push({ x: p.x, y: p.y });
-        if (p.history.length > 15) { // Trail length
+        // Since particles move much slower, we need a longer history buffer to keep trails visible
+        if (p.history.length > 35) { 
           p.history.shift();
         }
 
