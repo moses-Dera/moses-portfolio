@@ -29,7 +29,8 @@ export default async function ManageExperiencePage() {
   });
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
+    <main className="min-h-screen pt-32 px-6 pb-24 relative z-10">
+      <div className="max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
         <div>
           <h1 className="text-3xl font-jetbrains font-extrabold text-foreground">MANAGE_EXPERIENCE</h1>
@@ -114,6 +115,7 @@ export default async function ManageExperiencePage() {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 }

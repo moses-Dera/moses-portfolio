@@ -34,8 +34,9 @@ export default async function ManageSkillsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-8">
-      <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
+    <main className="min-h-screen pt-32 px-6 pb-24 relative z-10">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-border/40">
         <div>
           <h1 className="text-3xl font-jetbrains font-extrabold text-foreground">MANAGE_SKILLS</h1>
           <p className="font-mono text-sm text-foreground/50 mt-1">Update your tech stack and proficiency.</p>
@@ -110,6 +111,7 @@ export default async function ManageSkillsPage() {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 }
