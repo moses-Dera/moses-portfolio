@@ -1,7 +1,7 @@
 
 import React from 'react';
 import prisma from '@/lib/prisma';
-import Link from 'next/link';
+
 import { Experience } from '@prisma/client';
 
 export const metadata = {
@@ -44,9 +44,7 @@ export default async function ExperiencePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10 pb-20">
-      <Link href="/" className="inline-flex items-center text-foreground/50 hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
-        {"<-- RETURN_TO_HOME"}
-      </Link>
+
       <div className="mb-12 text-center md:text-left">
         <h1 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-4 tracking-tight">
           EXPERIENCE
