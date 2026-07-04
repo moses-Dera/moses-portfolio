@@ -3,6 +3,16 @@ import { createExperience, deleteExperience } from './actions';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  startDate: string;
+  endDate: string | null;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const revalidate = 0;
 
@@ -76,7 +86,7 @@ export default async function ManageExperiencePage() {
               No experience records found.
             </div>
           ) : (
-            experiences.map((exp) => (
+            experiences.map((exp: Experience) => (
               <div key={exp.id} className="border border-border/40 bg-background p-6 hover:border-accent/50 transition-colors group">
                 <div className="flex justify-between items-start mb-4">
                   <div>

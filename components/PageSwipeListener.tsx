@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ROUTES = ['/', '/skill', '/experience', '/project', '/contact'];
 
@@ -11,82 +12,73 @@ export default function PageSwipeListener() {
   const isNavigating = useRef(false);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
+  
+  const [dripDirection, setDripDirection] = useState<'up' | 'down' | 'left' | 'right' | null>(null);
+
+  // Debounce the event so that inertia scrolling doesn't instantly trigger navigation after a route change
+  useEffect(() => {
+    isNavigating.current = true;
+    setDripDirection(null); // Clear any pending animations
+    
+    const timeout = setTimeout(() => {
+      isNavigating.current = false;
+    }, 1500);
+    return () => clearTimeout(timeout);
+  }, [pathname]);
 
   useEffect(() => {
-    // Only enable on our main portfolio routes. Avoid admin routes or individual case studies.
     if (!ROUTES.includes(pathname)) return;
 
-    const handleNavigate = (direction: 'up' | 'down') => {
+    const handleNavigate = (direction: 'up' | 'down' | 'left' | 'right') => {
       if (isNavigating.current) return;
+      isNavigating.current = true;
+      setDripDirection(direction);
 
       const currentIndex = ROUTES.indexOf(pathname);
+      let nextIndex = currentIndex;
       
-      if (direction === 'down') {
-        isNavigating.current = true;
-        // Loop back to start if at the end
-        const nextIndex = currentIndex < ROUTES.length - 1 ? currentIndex + 1 : 0;
-        router.push(ROUTES[nextIndex]);
-      } else if (direction === 'up') {
-        isNavigating.current = true;
-        // Loop back to end if at the start
-        const prevIndex = currentIndex > 0 ? currentIndex - 1 : ROUTES.length - 1;
-        router.push(ROUTES[prevIndex]);
+      if (direction === 'down' || direction === 'right') {
+        nextIndex = currentIndex < ROUTES.length - 1 ? currentIndex + 1 : 0;
+      } else if (direction === 'up' || direction === 'left') {
+        nextIndex = currentIndex > 0 ? currentIndex - 1 : ROUTES.length - 1;
       }
       
-      // Lock navigation for a short duration to prevent double-jumps from trackpad inertia
+      // Delay navigation slightly so the water drip effect can expand
+      setTimeout(() => {
+        router.push(ROUTES[nextIndex]);
+      }, 500); 
+      
       setTimeout(() => {
         isNavigating.current = false;
-      }, 1000);
-    };
-
-    const isScrollable = (el: HTMLElement) => {
-      const hasScrollableContent = el.scrollHeight > el.clientHeight;
-      const overflowYStyle = window.getComputedStyle(el).overflowY;
-      const isOverflowHidden = overflowYStyle.indexOf('hidden') !== -1;
-      return hasScrollableContent && !isOverflowHidden;
-    };
-
-    const getScrollableElement = (target: HTMLElement) => {
-      let scrollableParent: HTMLElement | null = target;
-      while (scrollableParent && scrollableParent !== document.body && scrollableParent !== document.documentElement) {
-        if (isScrollable(scrollableParent)) return scrollableParent;
-        scrollableParent = scrollableParent.parentElement;
-      }
-      
-      // If we reached the body/html, check if the page itself is vertically scrollable
-      const docEl = document.documentElement;
-      if (docEl.scrollHeight > docEl.clientHeight) return docEl;
-      
-      return null;
+      }, 2000);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      const target = e.target as HTMLElement;
-      const scrollableEl = getScrollableElement(target);
+      if (isNavigating.current) return;
       
       const isVertical = Math.abs(e.deltaY) > Math.abs(e.deltaX);
 
       if (isVertical) {
-        if (scrollableEl) {
-          const isDoc = scrollableEl === document.documentElement || scrollableEl === document.body;
-          const scrollTop = isDoc ? window.scrollY : scrollableEl.scrollTop;
-          const scrollHeight = scrollableEl.scrollHeight;
-          const clientHeight = isDoc ? window.innerHeight : scrollableEl.clientHeight;
+        const docEl = document.documentElement;
+        const scrollTop = window.scrollY;
+        const scrollHeight = docEl.scrollHeight;
+        const clientHeight = window.innerHeight;
 
-          const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
-          const atTop = scrollTop <= 0;
+        const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
+        const atTop = scrollTop <= 0;
 
-          if (e.deltaY > 0 && atBottom) handleNavigate('down');
-          else if (e.deltaY < 0 && atTop) handleNavigate('up');
-        } else {
-          // Vertical scroll but no scrollable element (short page)
-          if (e.deltaY > 30) handleNavigate('down');
-          else if (e.deltaY < -30) handleNavigate('up');
+        if (e.deltaY > 50 && atBottom) {
+          handleNavigate('down');
+        } else if (e.deltaY < -50 && atTop) {
+          handleNavigate('up');
         }
       } else {
-        // Horizontal scroll
-        if (e.deltaX > 30) handleNavigate('down');
-        else if (e.deltaX < -30) handleNavigate('up');
+        // Horizontal Scroll
+        if (e.deltaX > 50) {
+          handleNavigate('right');
+        } else if (e.deltaX < -50) {
+          handleNavigate('left');
+        }
       }
     };
 
@@ -96,35 +88,35 @@ export default function PageSwipeListener() {
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
+      if (isNavigating.current) return;
+      
       const touchEndY = e.changedTouches[0].clientY;
       const touchEndX = e.changedTouches[0].clientX;
       const deltaY = touchStartY.current - touchEndY;
       const deltaX = touchStartX.current - touchEndX;
       
-      const target = e.target as HTMLElement;
-      const scrollableEl = getScrollableElement(target);
-      
       const isVertical = Math.abs(deltaY) > Math.abs(deltaX);
 
       if (isVertical) {
-        if (scrollableEl) {
-          const isDoc = scrollableEl === document.documentElement || scrollableEl === document.body;
-          const scrollTop = isDoc ? window.scrollY : scrollableEl.scrollTop;
-          const scrollHeight = scrollableEl.scrollHeight;
-          const clientHeight = isDoc ? window.innerHeight : scrollableEl.clientHeight;
+        const docEl = document.documentElement;
+        const scrollTop = window.scrollY;
+        const scrollHeight = docEl.scrollHeight;
+        const clientHeight = window.innerHeight;
 
-          const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
-          const atTop = scrollTop <= 0;
+        const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
+        const atTop = scrollTop <= 0;
 
-          if (deltaY > 50 && atBottom) handleNavigate('down');
-          else if (deltaY < -50 && atTop) handleNavigate('up');
-        } else {
-          if (deltaY > 50) handleNavigate('down');
-          else if (deltaY < -50) handleNavigate('up');
+        if (deltaY > 80 && atBottom) {
+          handleNavigate('down');
+        } else if (deltaY < -80 && atTop) {
+          handleNavigate('up');
         }
       } else {
-        if (deltaX > 50) handleNavigate('down');
-        else if (deltaX < -50) handleNavigate('up');
+        if (deltaX > 80) {
+          handleNavigate('right');
+        } else if (deltaX < -80) {
+          handleNavigate('left');
+        }
       }
     };
 
@@ -139,5 +131,42 @@ export default function PageSwipeListener() {
     };
   }, [pathname, router]);
 
-  return null;
+  const getDripStyle = (dir: 'up' | 'down' | 'left' | 'right'): React.CSSProperties => {
+    const size = '150vmax';
+    const offset = '-75vmax'; // Half of size
+    
+    const baseStyle: React.CSSProperties = {
+      width: size,
+      height: size,
+      borderRadius: '50%',
+      position: 'fixed',
+    };
+
+    switch (dir) {
+      case 'up':
+        return { ...baseStyle, top: offset, left: '50%', marginLeft: offset };
+      case 'down':
+        return { ...baseStyle, bottom: offset, left: '50%', marginLeft: offset };
+      case 'left':
+        return { ...baseStyle, left: offset, top: '50%', marginTop: offset };
+      case 'right':
+        return { ...baseStyle, right: offset, top: '50%', marginTop: offset };
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {dripDirection && (
+        <motion.div
+          key={dripDirection}
+          className="z-[9999] pointer-events-none bg-gradient-to-br from-blue-500/20 to-cyan-300/10 backdrop-blur-md shadow-[0_0_60px_rgba(59,130,246,0.3)] border border-white/10"
+          style={getDripStyle(dripDirection)}
+          initial={{ scale: 0, opacity: 1 }}
+          animate={{ scale: 1, opacity: 0.8 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+      )}
+    </AnimatePresence>
+  );
 }
