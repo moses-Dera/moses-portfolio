@@ -39,30 +39,29 @@ export default async function ManageSkillsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* ADD SKILL FORM */}
+        {/* ADD SKILL CATEGORY FORM */}
         <div className="col-span-1 border border-border/40 bg-foreground/5 p-6 h-fit sticky top-24">
           <h2 className="text-xl font-bold font-jetbrains mb-6 text-accent">{"// ADD_NEW"}</h2>
           
           <form action={createSkill} className="flex flex-col gap-4">
             <div>
-              <label className="block font-mono text-xs text-foreground/70 mb-1">SKILL_NAME</label>
-              <input name="name" type="text" required placeholder="e.g. Next.js" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
-            </div>
-            
-            <div>
-              <label className="block font-mono text-xs text-foreground/70 mb-1">CATEGORY</label>
-              <select name="category" required className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none">
-                <option value="Backend">Backend</option>
-                <option value="Frontend">Frontend</option>
-                <option value="Infrastructure">Infrastructure</option>
-                <option value="Database">Database</option>
-                <option value="Tools">Tools</option>
-              </select>
+              <label className="block font-mono text-xs text-foreground/70 mb-1">CATEGORY_TITLE</label>
+              <input name="category" type="text" required placeholder="e.g. System Architecture" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
             </div>
 
             <div>
-              <label className="block font-mono text-xs text-foreground/70 mb-1">PROFICIENCY (1-100)</label>
-              <input name="proficiency" type="number" min="1" max="100" defaultValue="80" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
+              <label className="block font-mono text-xs text-foreground/70 mb-1">DESCRIPTION</label>
+              <textarea name="description" required rows={4} className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none"></textarea>
+            </div>
+            
+            <div>
+              <label className="block font-mono text-xs text-foreground/70 mb-1">TECH_STACK (Comma separated)</label>
+              <textarea name="techStack" required rows={3} placeholder="Python, Next.js, C++" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none"></textarea>
+            </div>
+
+            <div>
+              <label className="block font-mono text-xs text-foreground/70 mb-1">ORDER (e.g. 1 for '01')</label>
+              <input name="order" type="number" min="1" defaultValue="1" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
             </div>
 
             <button type="submit" className="mt-4 bg-accent text-white font-jetbrains font-bold py-3 hover:bg-accent/80 transition-colors">
@@ -75,21 +74,25 @@ export default async function ManageSkillsPage() {
         <div className="col-span-2 flex flex-col gap-6">
           {skills.length === 0 ? (
             <div className="border border-border/20 p-8 text-center font-mono text-foreground/50">
-              No skills found or DB not synced.
+              No skill categories found or DB not synced.
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {skills.map((skill) => (
-                <div key={skill.id} className="border border-border/40 bg-background p-4 flex justify-between items-center hover:border-accent/50 transition-colors group">
-                  <div>
-                    <h3 className="text-lg font-bold font-jetbrains text-foreground">{skill.name}</h3>
-                    <p className="text-accent font-mono text-xs mt-1">[{skill.category}] - {skill.proficiency}%</p>
+                <div key={skill.id} className="border border-border/40 bg-background p-4 flex justify-between items-start hover:border-accent/50 transition-colors group">
+                  <div className="flex-1 pr-4">
+                    <h3 className="text-lg font-bold font-jetbrains text-foreground">
+                      <span className="text-accent mr-2">{String(skill.order).padStart(2, '0')}</span>
+                      {skill.category}
+                    </h3>
+                    <p className="font-mono text-xs mt-2 text-foreground/70">{skill.description}</p>
+                    <p className="text-accent font-mono text-xs mt-2 break-words">[{skill.techStack}]</p>
                   </div>
                   <form action={async () => {
                     'use server';
                     await deleteSkill(skill.id);
                   }}>
-                    <button type="submit" className="text-red-500 hover:text-red-400 font-mono text-xs border border-red-500/30 px-2 py-1 bg-red-500/10">
+                    <button type="submit" className="text-red-500 hover:text-red-400 font-mono text-xs border border-red-500/30 px-2 py-1 bg-red-500/10 shrink-0">
                       DELETE
                     </button>
                   </form>

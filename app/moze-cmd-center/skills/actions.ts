@@ -15,18 +15,18 @@ async function checkAuth() {
 export async function createSkill(formData: FormData) {
   await checkAuth();
   
-  const name = formData.get('name') as string;
   const category = formData.get('category') as string;
-  const proficiencyStr = formData.get('proficiency') as string;
-  const proficiency = proficiencyStr ? parseInt(proficiencyStr, 10) : 80;
-  const iconUrl = formData.get('iconUrl') as string | null;
+  const description = formData.get('description') as string;
+  const techStack = formData.get('techStack') as string;
+  const orderStr = formData.get('order') as string;
+  const order = orderStr ? parseInt(orderStr, 10) : 1;
 
   await prisma.skill.create({
     data: {
-      name,
       category,
-      proficiency: isNaN(proficiency) ? 80 : proficiency,
-      iconUrl: iconUrl || null,
+      description,
+      techStack,
+      order: isNaN(order) ? 1 : order,
     },
   });
 

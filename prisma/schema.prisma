@@ -32,10 +32,10 @@ model Experience {
 
 model Skill {
   id          String   @id @default(cuid())
-  name        String
-  category    String   // e.g. "Backend", "Infrastructure", "Frontend"
-  proficiency Int      // e.g. 1-100 percentage for a skill bar (optional)
-  iconUrl     String?  // Optional SVG or image icon
+  category    String   // e.g. "System Architecture & Backend Engineering"
+  description String   // Descriptive paragraph
+  techStack   String   // Comma-separated list of technologies
+  order       Int      // For the "01", "02" sequence display
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
