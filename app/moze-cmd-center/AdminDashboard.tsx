@@ -25,9 +25,9 @@ export function AdminDashboard() {
           <p className="font-mono text-sm text-zinc-500 mt-2">Session Verified // Stealth Mode Active</p>
         </div>
         <div className="flex items-center space-x-6">
-          <div className="animate-pulse flex gap-2 items-center text-red-500 font-mono text-xs">
-            <div className="w-2 h-2 rounded-full bg-red-500"></div>
-            LIVE
+          <div className="flex gap-2 items-center text-emerald-500 font-mono text-xs">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+            SECURE
           </div>
           <button onClick={handleLogout} className="font-mono text-xs text-zinc-400 hover:text-white transition-colors uppercase tracking-widest border border-white/10 px-3 py-1">
             Terminate

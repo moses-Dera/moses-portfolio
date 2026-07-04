@@ -119,7 +119,7 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-mono text-zinc-400 mb-1 uppercase tracking-wider">Live URL (optional)</label>
+            <label className="block text-xs font-mono text-zinc-400 mb-1 uppercase tracking-wider">Project URL (optional)</label>
             <input {...register('liveUrl')} className="w-full bg-black/50 border border-white/10 p-2 font-mono text-white text-sm focus:outline-none focus:border-red-500/50" />
           </div>
           <div>
