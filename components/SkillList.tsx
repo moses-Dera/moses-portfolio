@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion";
 import { Skill } from "@prisma/client";
+import Link from "next/link";
 
 const getShieldUrl = (tech: string) => {
   const t = tech.toLowerCase().trim();
@@ -52,7 +53,10 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
             transition={{ duration: 0.6 }}
             className="min-h-screen p-8 flex flex-col gap-10 overflow-x-hidden relative z-10"
         >
-            <div className="w-full flex justify-end mb-20">
+            <div className="w-full flex justify-between items-start mb-20">
+                <Link href="/" className="inline-flex items-center text-foreground/50 hover:text-accent font-mono text-sm transition-colors mt-2">
+                    {"<-- RETURN_TO_HOME"}
+                </Link>
                 <motion.h1 
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}

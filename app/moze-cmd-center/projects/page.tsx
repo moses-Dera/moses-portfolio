@@ -15,21 +15,18 @@ export default async function ManageProjectsPage() {
   return (
     <main className="min-h-screen pt-32 px-6 pb-24 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <div className="mb-8">
-          <Link href="/moze-cmd-center" className="text-zinc-500 hover:text-white font-mono text-sm transition-colors">
-            ← Back to Command Center
-          </Link>
-        </div>
-        
-        <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-6">
+        <div className="flex items-center justify-between mb-12 pb-6 border-b border-white/10">
           <div>
-            <h1 className="text-4xl font-bold tracking-tight mb-2">
-              Project <span className="text-zinc-500">Database</span>
+            <h1 className="text-3xl md:text-4xl font-jetbrains font-extrabold text-foreground">
+              PROJECT_DATABASE
             </h1>
-            <p className="text-zinc-400 font-mono text-sm uppercase tracking-widest">
+            <p className="font-mono text-sm text-foreground/50 mt-2 uppercase tracking-widest">
               Live Schema Editor
             </p>
           </div>
+          <Link href="/moze-cmd-center" className="font-mono text-sm text-foreground hover:text-accent transition-colors border border-border/40 px-4 py-2 hover:bg-foreground/5">
+            {"<--"} SYSTEM.ADMIN
+          </Link>
         </div>
 
         <ProjectManager initialProjects={projects} />

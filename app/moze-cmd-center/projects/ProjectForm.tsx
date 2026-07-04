@@ -73,9 +73,14 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
   return (
     <div className="bg-black/40 border border-white/10 p-6 relative"
          style={{ clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)' }}>
-      <h3 className="text-xl font-bold font-mono text-zinc-200 mb-6 border-b border-white/10 pb-4">
-        {project ? 'Edit Project' : 'New Project'}
-      </h3>
+      <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+        <h3 className="text-xl font-bold font-mono text-zinc-200">
+          {project ? 'Edit Project' : 'New Project'}
+        </h3>
+        <button type="button" onClick={onCancel} className="font-mono text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors">
+          {"<-- RETURN_TO_LIST"}
+        </button>
+      </div>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
