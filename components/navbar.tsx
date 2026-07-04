@@ -35,7 +35,13 @@ export default function Navbar() {
                         whileHover={{ scale: 1.1, y: -2 }}
                         className="text-sm sm:text-xl font-light border-2 border-dashed hover:border-none p-1"
                     >
-                        <Link href="/project">Work</Link>
+                        <Link href="/experience">Experience</Link>
+                    </motion.li>
+                    <motion.li
+                        whileHover={{ scale: 1.1, y: -2 }}
+                        className="text-sm sm:text-xl font-light border-2 border-dashed hover:border-none p-1"
+                    >
+                        <Link href="/project">Projects</Link>
                     </motion.li>
                     <motion.li
                         whileHover={{ scale: 1.1, y: -2 }}

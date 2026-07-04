@@ -67,7 +67,7 @@ export default function LightboxGallery({ images }: { images: ImageType[] }) {
       </div>
 
       <AnimatePresence>
-        {selectedIndex !== null && (
+        {isMounted && selectedIndex !== null && createPortal(
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -115,7 +115,8 @@ export default function LightboxGallery({ images }: { images: ImageType[] }) {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </motion.div>,
+          document.body
         )}
       </AnimatePresence>
     </>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import LightboxGallery from '@/components/LightboxGallery';
+import ReactMarkdown from 'react-markdown';
 
 const getShieldUrl = (tech: string) => {
   const t = tech.toLowerCase().trim();
@@ -47,7 +48,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
   const techStack = project.techStack.split(',').map(t => t.trim());
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10">
       <Link href="/project" className="inline-flex items-center text-(--color-muted) hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
         {"<-- RETURN_TO_PROJECTS"}
       </Link>
@@ -113,7 +114,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
                 if (headingText === 'Screenshots' || headingText === 'Screenshot') headingText = 'SYSTEM_INTERFACES';
                 blocks.push(
                   <div key={`h2-${idx}`} className="flex items-center gap-4 mt-16 mb-8">
-                    <span className="text-accent font-bold text-xl font-jetbrains">{"//"}</span>
+                    <span className="text-(--color-accent) font-bold text-xl font-jetbrains">{"//"}</span>
                     <h2 className="text-2xl md:text-3xl font-jetbrains font-bold text-foreground uppercase">
                       {headingText}
                     </h2>
@@ -122,9 +123,18 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
                 );
               } else {
                 blocks.push(
-                  <p key={`p-${idx}`} className="mb-6 font-mono text-foreground/80 leading-relaxed text-lg">
-                    {paragraph}
-                  </p>
+                  <div key={`md-${idx}`} className="mb-6 font-mono text-foreground/80 leading-relaxed text-lg 
+                    [&>h3]:text-xl [&>h3]:md:text-2xl [&>h3]:font-jetbrains [&>h3]:font-bold [&>h3]:text-foreground/90 [&>h3]:mt-8 [&>h3]:mb-4
+                    [&>ul]:ml-6 [&>ul]:list-disc [&>ul]:marker:text-(--color-accent) [&>ul]:space-y-2 [&>ul]:mb-6
+                    [&>ol]:ml-6 [&>ol]:list-decimal [&>ol]:marker:text-(--color-accent) [&>ol]:space-y-2 [&>ol]:mb-6
+                    [&>p>strong]:text-white [&>p>strong]:font-bold
+                    [&>li>strong]:text-white [&>li>strong]:font-bold
+                    [&_a]:text-(--color-accent) [&_a]:hover:underline
+                    [&_blockquote]:border-l-4 [&_blockquote]:border-(--color-accent) [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-foreground/60
+                    [&_code]:bg-foreground/10 [&_code]:px-1 [&_code]:rounded
+                  ">
+                    <ReactMarkdown>{paragraph}</ReactMarkdown>
+                  </div>
                 );
               }
             }
