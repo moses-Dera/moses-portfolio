@@ -59,7 +59,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
           {project.title}
         </h1>
         <div className="flex flex-wrap gap-3 mb-8">
-          {techStack.map((tech, i) => (
+          {techStack.map((tech: string, i: number) => (
             <div key={i} className="border border-border/40 bg-foreground/5 p-1 transition-all hover:border-(--color-accent)/50 hover:bg-(--color-accent)/10 shadow-sm"
                  style={{ clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
