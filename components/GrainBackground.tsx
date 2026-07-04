@@ -66,7 +66,7 @@ export default function GrainBackground() {
         const dy = p.y - currentMouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         let repulsionX = 0;
-        let repulsionY = 0;
+        let repulsionY = 0; 
         if (dist < 200) {
             const force = (200 - dist) / 200;
             repulsionX = (dx / dist) * force * 2;
