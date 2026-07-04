@@ -55,8 +55,11 @@ export default function GrainBackground() {
 
       const isDark = document.documentElement.classList.contains('dark');
 
-      // Fully clear canvas each frame — background CSS color shows through cleanly, no patches
-      ctx.clearRect(0, 0, width, height);
+      // Use destination-out to gradually fade the previous frame to transparent.
+      // This creates beautiful lingering trails WITHOUT eating up the CSS background color!
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.08)"; // The alpha controls trail length (lower = longer linger)
+      ctx.fillRect(0, 0, width, height);
 
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
       // Use a darker blue-grey for light mode so the ocean lines actually show up
@@ -110,22 +113,13 @@ export default function GrainBackground() {
           ? 0.15 + (pulse * 0.45)
           : 0.25 + (pulse * 0.50); // Higher max opacity for light mode to maintain contrast
 
-        // Draw streak line
-        if (!wrapped) {
-          ctx.strokeStyle = `rgba(${grainColor}, ${alpha})`;
-          ctx.lineWidth = p.size;
-          ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(prevX, prevY);
-          
-          // Add a small artificial length to the streak to simulate the old motion blur
-          const streakFactor = 3.0; // Adjust length of trails
-          const dxDraw = p.x - prevX;
-          const dyDraw = p.y - prevY;
-          
-          ctx.lineTo(p.x + dxDraw * streakFactor, p.y + dyDraw * streakFactor);
-          ctx.stroke();
-        }
+        // Draw particle (destination-out handles the fading trails automatically now)
+        ctx.fillStyle = `rgba(${grainColor}, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+
+      }
 
       ctx.globalCompositeOperation = "source-over";
       animationFrameId.current = requestAnimationFrame(drawGrain);

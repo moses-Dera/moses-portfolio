@@ -79,11 +79,23 @@ export default function PageSwipeListener() {
     const handleWheel = (e: WheelEvent) => {
       if (isNavigating.current) return;
       const isVert = Math.abs(e.deltaY) > Math.abs(e.deltaX);
+
       if (isVert) {
-        const atBottom = document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 2;
+        const docEl = document.documentElement;
+        const scrollHeight = docEl.scrollHeight;
+        const clientHeight = window.innerHeight;
+        // Page is genuinely scrollable only if content overflows by more than 40px
+        const isScrollable = scrollHeight - clientHeight > 40;
+
+        const atBottom = scrollHeight - clientHeight - window.scrollY <= 2;
         const atTop = window.scrollY <= 0;
-        if (e.deltaY > 50 && atBottom) navigate('down');
-        else if (e.deltaY < -50 && atTop) navigate('up');
+
+        if (e.deltaY > 50) {
+          // Navigate if page isn't scrollable OR we're at the very bottom
+          if (!isScrollable || atBottom) navigate('down');
+        } else if (e.deltaY < -50) {
+          if (!isScrollable || atTop) navigate('up');
+        }
       } else {
         if (e.deltaX > 50) navigate('right');
         else if (e.deltaX < -50) navigate('left');
