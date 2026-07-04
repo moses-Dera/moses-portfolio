@@ -96,7 +96,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
             }
           };
 
-          paragraphs.forEach((paragraph, idx) => {
+          paragraphs.forEach((paragraph: string, idx: number) => {
             const imgRegex = /!\[(.*?)\]\((.*?)\)/g;
             const textWithoutImages = paragraph.replace(imgRegex, '').trim();
 

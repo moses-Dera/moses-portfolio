@@ -78,10 +78,10 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                     </div>
                 )}
 
-                {skills.map((skill, index) => {
+                {skills.map((skill: Skill, index: number) => {
                     const isLeft = index % 2 === 0;
                     const orderNum = String(skill.order).padStart(2, '0');
-                    const badges = skill.techStack.split(',').map(s => s.trim()).filter(Boolean);
+                    const badges = skill.techStack.split(',').map((s: string) => s.trim()).filter(Boolean);
 
                     return (
                         <motion.div 

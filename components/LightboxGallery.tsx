@@ -51,7 +51,7 @@ export default function LightboxGallery({ images }: { images: ImageType[] }) {
   return (
     <>
       <div className={`my-12 grid gap-6 ${images.length === 1 ? 'grid-cols-1' : images.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-        {images.map((img, i) => (
+        {images.map((img: ImageType, i: number) => (
           <div 
             key={i} 
             onClick={() => openLightbox(i)}

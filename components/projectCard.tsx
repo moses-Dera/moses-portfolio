@@ -39,7 +39,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ id, name, description, techStack, image }) => {
-  const techs = techStack.split(',').map(t => t.trim()).filter(Boolean);
+  const techs = techStack.split(',').map((t: string) => t.trim()).filter(Boolean);
 
   return (
     <Link href={`/project/${id}`}>
@@ -75,7 +75,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, name, description, techSt
           <p className="text-foreground/70 mb-6 flex-1 line-clamp-3 leading-relaxed">{description}</p>
           
           <div className="flex flex-wrap gap-2 mt-auto">
-            {techs.map((tech, i) => (
+            {techs.map((tech: string, i: number) => (
               <div key={i} className="border border-border/30 bg-background/40 p-[2px] transition-all hover:border-(--color-accent)/50 hover:bg-(--color-accent)/10"
                    style={{ clipPath: 'polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px))' }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -41,6 +41,7 @@ export function ProjectForm({ project, onCancel }: { project?: Project, onCancel
     }
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const coverImage = watch('coverImage');
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

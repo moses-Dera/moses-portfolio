@@ -18,12 +18,20 @@ export default function PageSwipeListener() {
   // Debounce the event so that inertia scrolling doesn't instantly trigger navigation after a route change
   useEffect(() => {
     isNavigating.current = true;
-    setDripDirection(null); // Clear any pending animations
     
     const timeout = setTimeout(() => {
       isNavigating.current = false;
     }, 1500);
-    return () => clearTimeout(timeout);
+
+    // Clear drip animation after a brief delay (avoids calling setState synchronously in effect)
+    const dripClear = setTimeout(() => {
+      setDripDirection(null);
+    }, 0);
+
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(dripClear);
+    };
   }, [pathname]);
 
   useEffect(() => {
