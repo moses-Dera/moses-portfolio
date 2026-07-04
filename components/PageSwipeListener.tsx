@@ -132,14 +132,16 @@ export default function PageSwipeListener() {
   }, [pathname, router]);
 
   const getDripStyle = (dir: 'up' | 'down' | 'left' | 'right'): React.CSSProperties => {
-    const size = '150vmax';
-    const offset = '-75vmax'; // Half of size
+    // A smaller, subtle ripple that expands from the edge
+    const size = '500px';
+    const offset = '-250px'; 
     
     const baseStyle: React.CSSProperties = {
       width: size,
       height: size,
       borderRadius: '50%',
       position: 'fixed',
+      background: 'transparent',
     };
 
     switch (dir) {
@@ -159,10 +161,10 @@ export default function PageSwipeListener() {
       {dripDirection && (
         <motion.div
           key={dripDirection}
-          className="z-[9999] pointer-events-none bg-gradient-to-br from-blue-500/20 to-cyan-300/10 backdrop-blur-md shadow-[0_0_60px_rgba(59,130,246,0.3)] border border-white/10"
+          className="z-[9999] pointer-events-none backdrop-blur-md border border-foreground/10 shadow-[0_0_40px_rgba(255,255,255,0.05)]"
           style={getDripStyle(dripDirection)}
-          initial={{ scale: 0, opacity: 1 }}
-          animate={{ scale: 1, opacity: 0.8 }}
+          initial={{ scale: 0.1, opacity: 1 }}
+          animate={{ scale: 2.5, opacity: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         />
