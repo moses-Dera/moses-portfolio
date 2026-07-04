@@ -72,7 +72,7 @@ export default async function ExperiencePage() {
 
                     {/* Bullet Points */}
                     <div className="font-mono text-sm md:text-base text-foreground/80 space-y-3 mb-8">
-                      {exp.description.split('\n').filter(line => line.trim().length > 0).map((line, i) => (
+                      {exp.description.split('\n').filter((line: string) => line.trim().length > 0).map((line: string, i: number) => (
                         <div key={i} className="flex items-start gap-3">
                           <span className="text-(--color-accent) mt-1">▹</span>
                           <span className="leading-relaxed">{line.replace(/^[*-]\s+/, '')}</span>
