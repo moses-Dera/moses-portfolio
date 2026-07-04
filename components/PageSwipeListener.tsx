@@ -6,87 +6,87 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const ROUTES = ['/', '/skill', '/experience', '/project', '/contact'];
 
+// Three concentric ripple rings, each slightly delayed
+const RINGS = [
+  { delay: 0,    scale: [1, 2.2], opacity: [0.35, 0], duration: 0.7 },
+  { delay: 0.1,  scale: [1, 1.9], opacity: [0.22, 0], duration: 0.75 },
+  { delay: 0.2,  scale: [1, 1.6], opacity: [0.12, 0], duration: 0.8 },
+];
+
+type Direction = 'up' | 'down' | 'left' | 'right';
+
+// Returns position + size for the ripple origin at the correct edge
+const getRippleStyle = (dir: Direction): React.CSSProperties => {
+  // ~80px radius circle anchored to the edge
+  const base: React.CSSProperties = {
+    position: 'fixed',
+    width: '80px',
+    height: '80px',
+    borderRadius: '50%',
+    border: '1.5px solid rgba(255,255,255,0.25)',
+    background: 'transparent',
+    backdropFilter: 'blur(2px)',
+    WebkitBackdropFilter: 'blur(2px)',
+    pointerEvents: 'none',
+    zIndex: 9999,
+  };
+  switch (dir) {
+    case 'up':    return { ...base, top: '-40px',    left: '50%', transform: 'translateX(-50%)' };
+    case 'down':  return { ...base, bottom: '-40px', left: '50%', transform: 'translateX(-50%)' };
+    case 'left':  return { ...base, left: '-40px',   top: '50%',  transform: 'translateY(-50%)' };
+    case 'right': return { ...base, right: '-40px',  top: '50%',  transform: 'translateY(-50%)' };
+  }
+};
+
 export default function PageSwipeListener() {
   const router = useRouter();
   const pathname = usePathname();
   const isNavigating = useRef(false);
   const touchStartY = useRef(0);
   const touchStartX = useRef(0);
-  
-  const [dripDirection, setDripDirection] = useState<'up' | 'down' | 'left' | 'right' | null>(null);
+  const [rippleDir, setRippleDir] = useState<Direction | null>(null);
+  const [rippleKey, setRippleKey] = useState(0); // force remount on each swipe
 
-  // Debounce the event so that inertia scrolling doesn't instantly trigger navigation after a route change
+  // Reset lock after route change
   useEffect(() => {
     isNavigating.current = true;
-    
-    const timeout = setTimeout(() => {
-      isNavigating.current = false;
-    }, 1500);
-
-    // Clear drip animation after a brief delay (avoids calling setState synchronously in effect)
-    const dripClear = setTimeout(() => {
-      setDripDirection(null);
-    }, 0);
-
-    return () => {
-      clearTimeout(timeout);
-      clearTimeout(dripClear);
-    };
+    const timeout = setTimeout(() => { isNavigating.current = false; }, 1500);
+    const clear = setTimeout(() => { setRippleDir(null); }, 0);
+    return () => { clearTimeout(timeout); clearTimeout(clear); };
   }, [pathname]);
 
   useEffect(() => {
     if (!ROUTES.includes(pathname)) return;
 
-    const handleNavigate = (direction: 'up' | 'down' | 'left' | 'right') => {
+    const navigate = (direction: Direction) => {
       if (isNavigating.current) return;
       isNavigating.current = true;
-      setDripDirection(direction);
+      setRippleDir(direction);
+      setRippleKey(k => k + 1);
 
-      const currentIndex = ROUTES.indexOf(pathname);
-      let nextIndex = currentIndex;
-      
+      const idx = ROUTES.indexOf(pathname);
+      let next = idx;
       if (direction === 'down' || direction === 'right') {
-        nextIndex = currentIndex < ROUTES.length - 1 ? currentIndex + 1 : 0;
-      } else if (direction === 'up' || direction === 'left') {
-        nextIndex = currentIndex > 0 ? currentIndex - 1 : ROUTES.length - 1;
+        next = idx < ROUTES.length - 1 ? idx + 1 : 0;
+      } else {
+        next = idx > 0 ? idx - 1 : ROUTES.length - 1;
       }
-      
-      // Delay navigation slightly so the water drip effect can expand
-      setTimeout(() => {
-        router.push(ROUTES[nextIndex]);
-      }, 500); 
-      
-      setTimeout(() => {
-        isNavigating.current = false;
-      }, 2000);
+
+      setTimeout(() => { router.push(ROUTES[next]); }, 400);
+      setTimeout(() => { isNavigating.current = false; }, 2000);
     };
 
     const handleWheel = (e: WheelEvent) => {
       if (isNavigating.current) return;
-      
-      const isVertical = Math.abs(e.deltaY) > Math.abs(e.deltaX);
-
-      if (isVertical) {
-        const docEl = document.documentElement;
-        const scrollTop = window.scrollY;
-        const scrollHeight = docEl.scrollHeight;
-        const clientHeight = window.innerHeight;
-
-        const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
-        const atTop = scrollTop <= 0;
-
-        if (e.deltaY > 50 && atBottom) {
-          handleNavigate('down');
-        } else if (e.deltaY < -50 && atTop) {
-          handleNavigate('up');
-        }
+      const isVert = Math.abs(e.deltaY) > Math.abs(e.deltaX);
+      if (isVert) {
+        const atBottom = document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 2;
+        const atTop = window.scrollY <= 0;
+        if (e.deltaY > 50 && atBottom) navigate('down');
+        else if (e.deltaY < -50 && atTop) navigate('up');
       } else {
-        // Horizontal Scroll
-        if (e.deltaX > 50) {
-          handleNavigate('right');
-        } else if (e.deltaX < -50) {
-          handleNavigate('left');
-        }
+        if (e.deltaX > 50) navigate('right');
+        else if (e.deltaX < -50) navigate('left');
       }
     };
 
@@ -97,41 +97,23 @@ export default function PageSwipeListener() {
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (isNavigating.current) return;
-      
-      const touchEndY = e.changedTouches[0].clientY;
-      const touchEndX = e.changedTouches[0].clientX;
-      const deltaY = touchStartY.current - touchEndY;
-      const deltaX = touchStartX.current - touchEndX;
-      
-      const isVertical = Math.abs(deltaY) > Math.abs(deltaX);
-
-      if (isVertical) {
-        const docEl = document.documentElement;
-        const scrollTop = window.scrollY;
-        const scrollHeight = docEl.scrollHeight;
-        const clientHeight = window.innerHeight;
-
-        const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
-        const atTop = scrollTop <= 0;
-
-        if (deltaY > 80 && atBottom) {
-          handleNavigate('down');
-        } else if (deltaY < -80 && atTop) {
-          handleNavigate('up');
-        }
+      const dy = touchStartY.current - e.changedTouches[0].clientY;
+      const dx = touchStartX.current - e.changedTouches[0].clientX;
+      const isVert = Math.abs(dy) > Math.abs(dx);
+      if (isVert) {
+        const atBottom = document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 2;
+        const atTop = window.scrollY <= 0;
+        if (dy > 80 && atBottom) navigate('down');
+        else if (dy < -80 && atTop) navigate('up');
       } else {
-        if (deltaX > 80) {
-          handleNavigate('right');
-        } else if (deltaX < -80) {
-          handleNavigate('left');
-        }
+        if (dx > 80) navigate('right');
+        else if (dx < -80) navigate('left');
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
-
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
@@ -139,44 +121,18 @@ export default function PageSwipeListener() {
     };
   }, [pathname, router]);
 
-  const getDripStyle = (dir: 'up' | 'down' | 'left' | 'right'): React.CSSProperties => {
-    // A smaller, subtle ripple that expands from the edge
-    const size = '500px';
-    const offset = '-250px'; 
-    
-    const baseStyle: React.CSSProperties = {
-      width: size,
-      height: size,
-      borderRadius: '50%',
-      position: 'fixed',
-      background: 'transparent',
-    };
-
-    switch (dir) {
-      case 'up':
-        return { ...baseStyle, top: offset, left: '50%', marginLeft: offset };
-      case 'down':
-        return { ...baseStyle, bottom: offset, left: '50%', marginLeft: offset };
-      case 'left':
-        return { ...baseStyle, left: offset, top: '50%', marginTop: offset };
-      case 'right':
-        return { ...baseStyle, right: offset, top: '50%', marginTop: offset };
-    }
-  };
-
   return (
     <AnimatePresence>
-      {dripDirection && (
+      {rippleDir && RINGS.map((ring, i) => (
         <motion.div
-          key={dripDirection}
-          className="z-[9999] pointer-events-none backdrop-blur-md border border-foreground/10 shadow-[0_0_40px_rgba(255,255,255,0.05)]"
-          style={getDripStyle(dripDirection)}
-          initial={{ scale: 0.1, opacity: 1 }}
-          animate={{ scale: 2.5, opacity: 0 }}
+          key={`${rippleKey}-ring-${i}`}
+          style={getRippleStyle(rippleDir)}
+          initial={{ scale: ring.scale[0], opacity: ring.opacity[0] }}
+          animate={{ scale: ring.scale[1], opacity: ring.opacity[1] }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: ring.duration, delay: ring.delay, ease: 'easeOut' }}
         />
-      )}
+      ))}
     </AnimatePresence>
   );
 }
