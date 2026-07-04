@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { uploadResume, setActiveResume, deleteResume } from './actions';
 import { useRouter } from 'next/navigation';
+import { DeleteButton } from '@/components/DeleteButton';
 
 export type Resume = {
   id: string;
@@ -107,13 +108,11 @@ export function ResumeUpload({ resumes }: { resumes: Resume[] }) {
                       SET ACTIVE
                     </button>
                   )}
-                  <button 
-                    onClick={() => handleDelete(resume.id)}
-                    disabled={uploading}
+                  <DeleteButton 
+                    id={resume.id}
+                    onDelete={handleDelete}
                     className="text-red-500 hover:text-red-400 font-mono text-xs border border-red-500/30 px-3 py-1 bg-red-500/10 disabled:opacity-50 transition-colors"
-                  >
-                    DELETE
-                  </button>
+                  />
                 </div>
               </div>
             </div>

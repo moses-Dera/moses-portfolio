@@ -12,6 +12,7 @@ import { createSkill, deleteSkill } from './actions';
 import Link from 'next/link';
 import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { DeleteButton } from '@/components/DeleteButton';
 
 export const revalidate = 0;
 
@@ -96,14 +97,10 @@ export default async function ManageSkillsPage() {
                     <p className="font-mono text-xs mt-2 text-foreground/70">{skill.description}</p>
                     <p className="text-accent font-mono text-xs mt-2 break-words">[{skill.techStack}]</p>
                   </div>
-                  <form action={async () => {
-                    'use server';
-                    await deleteSkill(skill.id);
-                  }}>
-                    <button type="submit" className="text-red-500 hover:text-red-400 font-mono text-xs border border-red-500/30 px-2 py-1 bg-red-500/10 shrink-0">
-                      DELETE
-                    </button>
-                  </form>
+                  <DeleteButton 
+                    id={skill.id} 
+                    onDelete={deleteSkill}
+                  />
                 </div>
               ))}
             </div>

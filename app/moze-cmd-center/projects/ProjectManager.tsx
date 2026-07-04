@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ProjectForm } from './ProjectForm';
 import { deleteProject } from './actions';
 import { useRouter } from 'next/navigation';
+import { DeleteButton } from '@/components/DeleteButton';
 
 export interface Project {
   id: string;
@@ -24,10 +25,8 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
   const router = useRouter();
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you absolutely sure you want to delete this project?')) {
-      await deleteProject(id);
-      router.refresh();
-    }
+    await deleteProject(id);
+    router.refresh();
   };
 
   return (
@@ -77,9 +76,11 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
                   <button onClick={() => setEditingId(project.id)} className="text-zinc-400 hover:text-white font-mono text-xs uppercase tracking-widest px-3 py-1 border border-white/10">
                     Edit
                   </button>
-                  <button onClick={() => handleDelete(project.id)} className="text-red-500/70 hover:text-red-400 font-mono text-xs uppercase tracking-widest px-3 py-1 border border-red-500/30">
-                    Delete
-                  </button>
+                  <DeleteButton 
+                    id={project.id}
+                    onDelete={handleDelete}
+                    className="text-red-500/70 hover:text-red-400 font-mono text-xs uppercase tracking-widest px-3 py-1 border border-red-500/30"
+                  />
                 </div>
               </>
             )}

@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { createExperience, deleteExperience } from './actions';
 import Link from 'next/link';
 import { getSession } from '@/lib/auth';
+import { DeleteButton } from '@/components/DeleteButton';
 import { redirect } from 'next/navigation';
 interface Experience {
   id: string;
@@ -95,14 +96,11 @@ export default async function ManageExperiencePage() {
                   </div>
                   <div className="text-right">
                     <p className="font-mono text-xs text-foreground/50">{exp.startDate} - {exp.endDate || 'Present'}</p>
-                    <form action={async () => {
-                      'use server';
-                      await deleteExperience(exp.id);
-                    }}>
-                      <button type="submit" className="text-red-500 hover:text-red-400 font-mono text-xs mt-2 border border-red-500/30 px-2 py-1 bg-red-500/10">
-                        DELETE
-                      </button>
-                    </form>
+                    <DeleteButton 
+                      id={exp.id} 
+                      onDelete={deleteExperience}
+                      className="text-red-500 hover:text-red-400 font-mono text-xs mt-2 border border-red-500/30 px-2 py-1 bg-red-500/10"
+                    />
                   </div>
                 </div>
                 
