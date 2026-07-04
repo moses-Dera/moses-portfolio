@@ -143,24 +143,24 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
           return blocks;
         })()}
       </div>
+      </div>
 
       {/* Action Links */}
-      <div className="mt-16 flex gap-6 border-t border-border pt-8">
+      <div className="mt-16 mb-16 flex flex-wrap gap-4 border-t border-border/40 pt-8">
         {project.liveUrl && (
           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" 
-             className="px-8 py-4 font-jetbrains font-bold bg-(--color-accent) text-white hover:bg-blue-600 transition-colors"
+             className="px-8 py-4 font-jetbrains font-bold bg-accent text-white hover:opacity-80 transition-opacity"
              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}>
             LAUNCH_APPLICATION
           </a>
         )}
         {project.repoUrl && (
           <a href={project.repoUrl} target="_blank" rel="noopener noreferrer"
-             className="px-8 py-4 font-jetbrains font-bold border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent)/10 transition-colors"
+             className="px-8 py-4 font-jetbrains font-bold border border-accent text-accent hover:bg-accent/10 transition-colors"
              style={{ clipPath: 'polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))' }}>
             VIEW_SOURCE_CODE
           </a>
         )}
-        </div>
       </div>
     </div>
   );
