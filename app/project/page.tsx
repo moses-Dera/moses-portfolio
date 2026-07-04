@@ -2,6 +2,14 @@ import React from 'react';
 import ProjectCard from '@/components/projectCard';
 import prisma from '@/lib/prisma';
 
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string | null;
+  techStack: string;
+}
+
 export const revalidate = 0; // Ensure data is always fresh
 
 export default async function ProjectsPage() {
@@ -21,7 +29,7 @@ export default async function ProjectsPage() {
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
-        {projects.map((project) => (
+        {projects.map((project: Project) => (
           <ProjectCard
             key={project.id}
             id={project.id}
