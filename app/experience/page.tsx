@@ -2,7 +2,16 @@
 import React from 'react';
 import prisma from '@/lib/prisma';
 
-import { Experience } from '@prisma/client';
+interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  startDate: string;
+  endDate: string | null;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const metadata = {
   title: 'Experience | Moses C. Okonkwo',

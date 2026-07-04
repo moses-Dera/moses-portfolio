@@ -20,7 +20,7 @@ const projectSchema = z.object({
 
 type ProjectSchema = z.infer<typeof projectSchema>;
 
-import { Project } from '@prisma/client';
+import { Project } from './ProjectManager';
 
 export function ProjectForm({ project, onCancel }: { project?: Project, onCancel: () => void }) {
   const [error, setError] = useState('');

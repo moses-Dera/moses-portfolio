@@ -1,4 +1,12 @@
-import { Skill } from '@prisma/client';
+interface Skill {
+  id: string;
+  category: string;
+  description: string;
+  techStack: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 import prisma from '@/lib/prisma';
 import { createSkill, deleteSkill } from './actions';
 import Link from 'next/link';

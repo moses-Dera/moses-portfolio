@@ -1,6 +1,14 @@
 "use client"
 import { motion } from "framer-motion";
-import { Skill } from "@prisma/client";
+interface Skill {
+  id: string;
+  category: string;
+  description: string;
+  techStack: string;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 const getShieldUrl = (tech: string) => {
   const t = tech.toLowerCase().trim();

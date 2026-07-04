@@ -5,7 +5,18 @@ import { ProjectForm } from './ProjectForm';
 import { deleteProject } from './actions';
 import { useRouter } from 'next/navigation';
 
-import { Project } from '@prisma/client';
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string | null;
+  repoUrl: string | null;
+  liveUrl: string | null;
+  techStack: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export function ProjectManager({ initialProjects }: { initialProjects: Project[] }) {
   const [editingId, setEditingId] = useState<string | null>(null);
