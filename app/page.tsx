@@ -67,8 +67,8 @@ export default function Home(){
               <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border border-accent text-accent hover:bg-accent hover:text-black transition-colors">
                 View Resume
               </a>
-              <a href={resumeUrl} download="Moses_Okonkwo_Resume.pdf" target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border border-foreground/30 text-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2">
-                Download <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+              <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/30 text-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2">
+                Extract Resume <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               </a>
             </>
           )}

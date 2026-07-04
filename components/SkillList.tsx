@@ -93,10 +93,8 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
 
                         {/* DOWNLOAD BUTTON */}
                         <a 
-                            href={resumeUrl} 
+                            href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`}
                             download="Moses_Okonkwo_Resume.pdf"
-                            target="_blank" 
-                            rel="noopener noreferrer"
                             className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-foreground/5 border border-foreground/30 text-foreground font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-foreground hover:text-background shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                             style={{ clipPath: 'polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px)' }}
                         >
