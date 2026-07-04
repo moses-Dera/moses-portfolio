@@ -71,12 +71,34 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
             transition={{ duration: 0.6 }}
             className="min-h-screen p-8 flex flex-col gap-10 overflow-x-hidden relative z-10"
         >
-            <div className="w-full flex justify-end items-start mb-20">
+            <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-start gap-8 sm:gap-4 mb-20">
+                {resumeUrl ? (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.4, duration: 0.5 }}
+                        className="flex flex-row items-center order-2 sm:order-1"
+                    >
+                        <a 
+                            href={resumeUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
+                            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
+                        >
+                            <span className="tracking-widest">{"//"} DOWNLOAD_RESUME</span>
+                            <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
+                        </a>
+                    </motion.div>
+                ) : (
+                    <div className="order-2 sm:order-1 hidden sm:block"></div>
+                )}
+                
                 <motion.h1 
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-4xl font-jetbrains font-extrabold text-accent text-right"
+                    className="text-4xl font-jetbrains font-extrabold text-accent text-right order-1 sm:order-2"
                 >
                     SKILLS{" //"}
                 </motion.h1>
@@ -135,27 +157,6 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                     );
                 })}
             </div>
-
-            {resumeUrl && (
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    className="mt-16 flex flex-row justify-end items-center"
-                >
-                    <a 
-                        href={resumeUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group relative inline-flex items-center gap-4 px-10 py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
-                        style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
-                    >
-                        <span className="tracking-widest">{"//"} EXTRACT_RESUME</span>
-                        <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
-                    </a>
-                </motion.div>
-            )}
         </motion.div>
     )
 }
