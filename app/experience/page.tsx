@@ -6,7 +6,7 @@ import { Experience } from '@prisma/client';
 
 export const metadata = {
   title: 'Experience | Moses C. Okonkwo',
-  description: 'Chronological timeline of my professional backend and system architecture experience.',
+  description: 'Chronological timeline of my professional experience.',
 };
 
 export default async function ExperiencePage() {
