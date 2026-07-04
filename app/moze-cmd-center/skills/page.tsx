@@ -10,16 +10,15 @@ interface Skill {
 import prisma from '@/lib/prisma';
 import { createSkill, deleteSkill } from './actions';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 export const revalidate = 0;
 
 export default async function ManageSkillsPage() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get('moze_admin_session');
+  const session = await getSession();
   
-  if (!session?.value) {
+  if (!session) {
     redirect('/moze-cmd-center');
   }
 

@@ -1,16 +1,15 @@
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { ResumeUpload } from './ResumeUpload';
 
 export const revalidate = 0;
 
 export default async function ManageResumePage() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get('moze_admin_session');
+  const session = await getSession();
   
-  if (session?.value !== 'authenticated') {
+  if (!session) {
     redirect('/moze-cmd-center');
   }
 
