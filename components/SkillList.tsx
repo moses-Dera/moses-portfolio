@@ -100,7 +100,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                             className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-foreground/5 border border-foreground/30 text-foreground font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-foreground hover:text-background shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                             style={{ clipPath: 'polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px)' }}
                         >
-                            <span className="tracking-widest">{"//"} DOWNLOAD_RESUME</span>
+                            <span className="tracking-widest">{"//"} EXTRACT_RESUME</span>
                             <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         </a>
                     </motion.div>
