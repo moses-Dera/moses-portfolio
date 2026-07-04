@@ -1,3 +1,4 @@
+
 import React from 'react';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
@@ -12,10 +13,27 @@ export default async function ExperiencePage() {
   let experiences: Experience[] = [];
   
   try {
-    experiences = await prisma.experience.findMany({
-      orderBy: {
-        startDate: 'desc',
-      },
+    experiences = await prisma.experience.findMany();
+    
+    // Sort experiences LIFO (newest first). "Present" ongoing roles go to the very top.
+    experiences.sort((a, b) => {
+      const getEndDate = (exp: Experience) => {
+        if (!exp.endDate || exp.endDate.toLowerCase() === 'present') return Infinity;
+        const time = new Date(exp.endDate).getTime();
+        return isNaN(time) ? 0 : time;
+      };
+      
+      const endA = getEndDate(a);
+      const endB = getEndDate(b);
+      
+      if (endA !== endB) {
+        return endB - endA; // Sort by end date descending
+      }
+      
+      // If both are "Present" or have the same end date, sort by start date
+      const startA = new Date(a.startDate).getTime();
+      const startB = new Date(b.startDate).getTime();
+      return (isNaN(startB) ? 0 : startB) - (isNaN(startA) ? 0 : startA);
     });
   } catch (error) {
     // We use console.warn instead of console.error because Next.js dev environment

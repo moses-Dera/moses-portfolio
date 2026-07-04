@@ -66,18 +66,28 @@ export default function PageSwipeListener() {
       
       const isVertical = Math.abs(e.deltaY) > Math.abs(e.deltaX);
 
-      if (scrollableEl && isVertical) {
-        const atBottom = Math.abs(scrollableEl.scrollHeight - scrollableEl.clientHeight - scrollableEl.scrollTop) <= 2;
-        const atTop = scrollableEl.scrollTop <= 0;
+      if (isVertical) {
+        if (scrollableEl) {
+          const isDoc = scrollableEl === document.documentElement || scrollableEl === document.body;
+          const scrollTop = isDoc ? window.scrollY : scrollableEl.scrollTop;
+          const scrollHeight = scrollableEl.scrollHeight;
+          const clientHeight = isDoc ? window.innerHeight : scrollableEl.clientHeight;
 
-        if (e.deltaY > 0 && atBottom) handleNavigate('down');
-        else if (e.deltaY < 0 && atTop) handleNavigate('up');
-        return;
+          const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
+          const atTop = scrollTop <= 0;
+
+          if (e.deltaY > 0 && atBottom) handleNavigate('down');
+          else if (e.deltaY < 0 && atTop) handleNavigate('up');
+        } else {
+          // Vertical scroll but no scrollable element (short page)
+          if (e.deltaY > 30) handleNavigate('down');
+          else if (e.deltaY < -30) handleNavigate('up');
+        }
+      } else {
+        // Horizontal scroll
+        if (e.deltaX > 30) handleNavigate('down');
+        else if (e.deltaX < -30) handleNavigate('up');
       }
-
-      // Support both vertical scrolling (if not scrollable) and horizontal trackpad swiping
-      if (e.deltaY > 30 || e.deltaX > 30) handleNavigate('down');
-      else if (e.deltaY < -30 || e.deltaX < -30) handleNavigate('up');
     };
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -96,18 +106,26 @@ export default function PageSwipeListener() {
       
       const isVertical = Math.abs(deltaY) > Math.abs(deltaX);
 
-      if (scrollableEl && isVertical) {
-        const atBottom = Math.abs(scrollableEl.scrollHeight - scrollableEl.clientHeight - scrollableEl.scrollTop) <= 2;
-        const atTop = scrollableEl.scrollTop <= 0;
+      if (isVertical) {
+        if (scrollableEl) {
+          const isDoc = scrollableEl === document.documentElement || scrollableEl === document.body;
+          const scrollTop = isDoc ? window.scrollY : scrollableEl.scrollTop;
+          const scrollHeight = scrollableEl.scrollHeight;
+          const clientHeight = isDoc ? window.innerHeight : scrollableEl.clientHeight;
 
-        if (deltaY > 50 && atBottom) handleNavigate('down');
-        else if (deltaY < -50 && atTop) handleNavigate('up');
-        return;
+          const atBottom = scrollHeight - clientHeight - scrollTop <= 2;
+          const atTop = scrollTop <= 0;
+
+          if (deltaY > 50 && atBottom) handleNavigate('down');
+          else if (deltaY < -50 && atTop) handleNavigate('up');
+        } else {
+          if (deltaY > 50) handleNavigate('down');
+          else if (deltaY < -50) handleNavigate('up');
+        }
+      } else {
+        if (deltaX > 50) handleNavigate('down');
+        else if (deltaX < -50) handleNavigate('up');
       }
-
-      // Support both vertical swiping (if not scrollable) and horizontal swiping
-      if (deltaY > 50 || deltaX > 50) handleNavigate('down');
-      else if (deltaY < -50 || deltaX < -50) handleNavigate('up');
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
