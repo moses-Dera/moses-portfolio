@@ -48,22 +48,19 @@ export default function GrainBackground() {
 
     const drawGrain = () => {
       const { width, height } = canvas;
-      // Slow ocean time — much more languid than before
       const time = performance.now() * 0.00025;
 
-      // Smoothly interpolate mouse
       currentMouse.current.x += (targetMouse.current.x - currentMouse.current.x) * 0.04;
       currentMouse.current.y += (targetMouse.current.y - currentMouse.current.y) * 0.04;
 
       const isDark = document.documentElement.classList.contains('dark');
-      const bgRgb = isDark ? '11, 17, 32' : '188, 189, 184';
 
-      // Lighter fade — allows particle trails to linger, giving that ocean depth
-      ctx.fillStyle = `rgba(${bgRgb}, 0.07)`;
-      ctx.fillRect(0, 0, width, height);
+      // Fully clear canvas each frame — background CSS color shows through cleanly, no patches
+      ctx.clearRect(0, 0, width, height);
 
       ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
-      const grainColor = isDark ? '140, 180, 255' : '50, 100, 200';
+      // Use a darker blue-grey for light mode so the ocean lines actually show up
+      const grainColor = isDark ? '140, 180, 255' : '30, 60, 100';
 
       for (let i = 0; i < particles.current.length; i++) {
         const p = particles.current[i];
@@ -93,26 +90,42 @@ export default function GrainBackground() {
         const returnX = (p.originX - p.x) * returnStrength;
         const returnY = (p.originY - p.y) * returnStrength;
 
+        // Keep track of previous position for drawing streaks
+        const prevX = p.x;
+        const prevY = p.y;
+
         p.x += wave1X + wave2X + repX + returnX;
         p.y += wave1Y + wave2Y + repY + returnY;
 
         // Soft wrap — particles don't teleport, origin stays valid
-        if (p.x > width + 20)  { p.x = -20;    p.originX = p.x; }
-        if (p.x < -20)         { p.x = width + 20; p.originX = p.x; }
-        if (p.y > height + 20) { p.y = -20;    p.originY = p.y; }
-        if (p.y < -20)         { p.y = height + 20; p.originY = p.y; }
+        let wrapped = false;
+        if (p.x > width + 20)  { p.x = -20;    p.originX = p.x; wrapped = true; }
+        if (p.x < -20)         { p.x = width + 20; p.originX = p.x; wrapped = true; }
+        if (p.y > height + 20) { p.y = -20;    p.originY = p.y; wrapped = true; }
+        if (p.y < -20)         { p.y = height + 20; p.originY = p.y; wrapped = true; }
 
         // Pulsing brightness — slow like ocean bioluminescence
         const pulse = (Math.sin(time * 2.0 + p.phase) + 1) * 0.5;
         const alpha = isDark
           ? 0.15 + (pulse * 0.45)
-          : 0.35 + (pulse * 0.35);
+          : 0.25 + (pulse * 0.50); // Higher max opacity for light mode to maintain contrast
 
-        ctx.fillStyle = `rgba(${grainColor}, ${alpha})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
+        // Draw streak line
+        if (!wrapped) {
+          ctx.strokeStyle = `rgba(${grainColor}, ${alpha})`;
+          ctx.lineWidth = p.size;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(prevX, prevY);
+          
+          // Add a small artificial length to the streak to simulate the old motion blur
+          const streakFactor = 3.0; // Adjust length of trails
+          const dxDraw = p.x - prevX;
+          const dyDraw = p.y - prevY;
+          
+          ctx.lineTo(p.x + dxDraw * streakFactor, p.y + dyDraw * streakFactor);
+          ctx.stroke();
+        }
 
       ctx.globalCompositeOperation = "source-over";
       animationFrameId.current = requestAnimationFrame(drawGrain);
