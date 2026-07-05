@@ -5,6 +5,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import GrainBackground from "../components/GrainBackground";
 import PageSwipeListener from "../components/PageSwipeListener";
+import PageNavigation from "../components/PageNavigation";
 
 const inter = Inter({ variable: "--font-inter", subsets: ['latin'], weight: ['400', '600', '700'] });
 const fira = Fira_Code({ variable: "--font-fira", subsets: ['latin'], weight: ['400', '600'] });
@@ -109,6 +110,7 @@ export default function RootLayout({
         <GrainBackground />
         <Navbar />
         <PageSwipeListener />
+        <PageNavigation />
         <main className="flex-1 flex flex-col pb-16">
           {children}
         </main>
