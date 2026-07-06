@@ -1,82 +1,152 @@
-"use client";
+import prisma from '@/lib/prisma';
+import HeroSection from '@/components/HeroSection';
+import SkillList from '@/components/SkillList';
+import ExperienceList from '@/components/ExperienceList';
+import ProjectCard from '@/components/projectCard';
+import ContactSection from '@/components/ContactSection';
+import { Skill } from '@prisma/client';
 
-import Link from "next/link"
-import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa"
-import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
-import { getResumeUrl } from "./actions"
+export const revalidate = 60; // Optional cache
 
-export default function Home(){
-  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+interface Experience {
+  id: string;
+  company: string;
+  role: string;
+  startDate: string;
+  endDate: string | null;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-  useEffect(() => {
-    getResumeUrl().then(url => {
-      if (url) setResumeUrl(url);
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string | null;
+  techStack: string;
+}
+
+export default async function Home() {
+  let skills: Skill[] = [];
+  let experiences: Experience[] = [];
+  let projects: Project[] = [];
+
+  try {
+    // Fetch all data in parallel
+    const [fetchedSkills, fetchedExperiences, fetchedProjects] = await Promise.all([
+      prisma.skill.findMany({ orderBy: { order: 'asc' } }),
+      prisma.experience.findMany(),
+      prisma.project.findMany({ orderBy: { createdAt: 'desc' } })
+    ]);
+
+    skills = fetchedSkills;
+    experiences = fetchedExperiences;
+    projects = fetchedProjects;
+
+    // Sort experiences LIFO (newest first). "Present" ongoing roles go to the very top.
+    experiences.sort((a, b) => {
+      const getEndDate = (exp: Experience) => {
+        if (!exp.endDate || exp.endDate.toLowerCase() === 'present') return Infinity;
+        const time = new Date(exp.endDate).getTime();
+        return isNaN(time) ? 0 : time;
+      };
+      
+      const endA = getEndDate(a);
+      const endB = getEndDate(b);
+      
+      if (endA !== endB) {
+        return endB - endA; // Sort by end date descending
+      }
+      
+      // If both are "Present" or have the same end date, sort by start date
+      const startA = new Date(a.startDate).getTime();
+      const startB = new Date(b.startDate).getTime();
+      return (isNaN(startB) ? 0 : startB) - (isNaN(startA) ? 0 : startA);
     });
-  }, []);
+
+  } catch (error) {
+    console.warn("Prisma Accelerate Connection Error (Gracefully handled):", error);
+  }
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative max-w-6xl mx-auto w-full pt-10 pb-32">
-      
-      {/* LEFT COLUMN: Title and Description */}
-      <div className="flex-1 flex flex-col justify-center items-start gap-4 relative z-10"> 
-        <div className="flex flex-col text-2xl sm:text-4xl md:text-5xl font-extrabold font-jetbrains text-foreground">
-          <div className="ml-8 text-accent">{"\\\\.."}</div>
-          <div>MOSES C. OKONKWO</div>
-          <div className="ml-8 text-accent">{"..\\\\"}</div>
-        </div>
-        
-        <div className="font-fira text-lg sm:text-xl border-b-2 border-accent pb-1 text-foreground font-semibold inline-block mt-4 drop-shadow-md">
-          Software Engineer // Backend & AI Systems
-        </div>
+    <main className="flex flex-col w-full">
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center pt-20">
+        <HeroSection />
+      </section>
 
-        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground font-medium leading-relaxed mt-6 drop-shadow-lg">
-          Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
-        </p>
-      </div>
-
-      {/* RIGHT COLUMN: Socials and Button (Bottom Right) */}
-      <div className="flex-1 flex flex-col justify-end items-end relative z-10 pb-4">
-        
-        <div className="flex gap-5 mb-4">
-          <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
-            <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
-              <FaGithub size={24} />
-            </a>
-          </motion.div>
-          <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
-            <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
-              <FaLinkedin size={24} />
-            </a>
-          </motion.div>
-          <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
-            <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
-              <FaCertificate size={24} />
-            </a>
-          </motion.div>
-          <motion.div whileHover={{ y: -5 }} transition={{ type: "spring", stiffness: 300 }}>
-            <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-accent transition-colors">
-              <FaTwitter size={24} />
-            </a>
-          </motion.div>
+      {/* Skills Section */}
+      <section id="skill" className="min-h-screen py-20 flex items-center border-t border-border/20">
+        <div className="max-w-6xl mx-auto w-full px-6 md:px-12 relative z-10">
+          <div className="mb-12 text-center md:text-left">
+            <h2 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-4 tracking-tight">
+              {"// "}SKILLS & ARSENAL
+            </h2>
+            <p className="font-mono text-foreground/80 font-semibold border-l-2 border-accent pl-4 text-sm md:text-base max-w-2xl mx-auto md:mx-0">
+              The tools, frameworks, and languages I use to engineer robust backend systems.
+            </p>
+          </div>
+          <SkillList skills={skills} />
         </div>
+      </section>
 
-        <div className="flex gap-4">
-          {resumeUrl && (
-            <>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border-2 border-accent text-foreground font-bold hover:bg-accent hover:text-white transition-colors bg-background/50 backdrop-blur-sm drop-shadow-md">
-                View Resume
-              </a>
-              <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/50 text-foreground font-medium hover:bg-foreground hover:text-background transition-colors flex items-center gap-2 bg-background/30 backdrop-blur-sm drop-shadow-md">
-                Extract Resume <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              </a>
-            </>
-          )}
-          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold bg-background/30 backdrop-blur-sm drop-shadow-md">
-            <Link href="/project">View project</Link>
-          </button>
+      {/* Experience Section */}
+      <section id="experience" className="min-h-screen py-20 border-t border-border/20">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10">
+          <div className="mb-12 text-center md:text-left">
+            <h2 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-4 tracking-tight">
+              {"// "}EXPERIENCE
+            </h2>
+            <p className="font-mono text-foreground/80 font-semibold border-l-2 border-accent pl-4 text-sm md:text-base max-w-2xl mx-auto md:mx-0">
+              A chronological timeline of systems built, architectures deployed, and technical impact.
+            </p>
+          </div>
+
+          <div className="relative mt-20">
+            <div className="absolute left-[20px] md:left-[30px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent via-accent/30 to-transparent"></div>
+            <ExperienceList experiences={experiences} />
+          </div>
         </div>
-      </div>
-    </div>
-  )
+      </section>
+
+      {/* Projects Section */}
+      <section id="project" className="min-h-screen py-20 flex items-center border-t border-border/20">
+        <div className="max-w-6xl mx-auto w-full px-6 md:px-12 relative z-10">
+          <div className="mb-12 text-center md:text-left">
+            <h2 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground mb-4 tracking-tight">
+              {"// "}PROJECTS
+            </h2>
+            <p className="font-mono text-foreground/80 font-semibold border-l-2 border-accent pl-4 text-sm md:text-base max-w-2xl mx-auto md:mx-0">
+              A showcase of systems, architectures, and applications I have engineered.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {projects.length === 0 ? (
+               <div className="text-foreground/80 font-mono font-semibold">
+                {"// Archiving project data..."}
+              </div>
+            ) : (
+              projects.map((project: Project) => (
+                <ProjectCard
+                  key={project.id}
+                  id={project.id}
+                  name={project.title}
+                  description={project.description}
+                  techStack={project.techStack}
+                  image={project.coverImage || undefined}
+                />
+              ))
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="min-h-[80vh] flex items-center border-t border-border/20">
+        <ContactSection />
+      </section>
+    </main>
+  );
 }
