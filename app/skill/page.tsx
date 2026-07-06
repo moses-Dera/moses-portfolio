@@ -1,10 +1,11 @@
 import prisma from '@/lib/prisma';
 import SkillList from '@/components/SkillList';
+import { Skill } from '@prisma/client';
 
 export const revalidate = 60; // Optional cache
 
 export default async function SkillPage() {
-  let skills = [];
+  let skills: Skill[] = [];
   try {
     skills = await prisma.skill.findMany({
       orderBy: { order: 'asc' }
