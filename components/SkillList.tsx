@@ -1,7 +1,5 @@
 "use client"
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { getResumeUrl } from "@/app/actions";
 
 interface Skill {
   id: string;
@@ -56,119 +54,58 @@ const getShieldUrl = (tech: string) => {
 };
 
 export default function SkillList({ skills }: { skills: Skill[] }) {
-    const [resumeUrl, setResumeUrl] = useState<string | null>(null);
-
-    useEffect(() => {
-        getResumeUrl().then(url => {
-            if (url) setResumeUrl(url);
-        });
-    }, []);
-
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-10 overflow-x-hidden w-full"
-        >
-            <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-start gap-8 sm:gap-4 mb-20">
-                {resumeUrl ? (
+        <div className="flex flex-col w-full relative">
+            {skills.length === 0 && (
+                <div className="text-center font-mono text-foreground/80 font-bold border border-border/20 p-8">
+                    NO_SKILLS_FOUND
+                </div>
+            )}
+
+            {skills.map((skill: Skill, index: number) => {
+                const orderNum = String(skill.order).padStart(2, '0');
+                const badges = skill.techStack.split(',').map((s: string) => s.trim()).filter(Boolean);
+
+                return (
                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.4, duration: 0.5 }}
-                        className="flex flex-row items-center gap-4 order-2 sm:order-1 flex-wrap justify-end sm:justify-start"
+                        key={skill.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className="group flex flex-col md:flex-row border-b border-border/10 hover:bg-foreground/[0.01] transition-colors duration-300 py-6 gap-4 md:gap-8 items-start"
                     >
-                        {/* VIEW BUTTON */}
-                        <a 
-                            href={resumeUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-accent hover:text-background hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
-                            style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
-                        >
-                            <span className="tracking-widest">{"//"} VIEW_RESUME</span>
-                            <span className="font-mono transition-transform duration-300 group-hover:translate-x-2">{"->"}</span>
-                        </a>
-
-                        {/* DOWNLOAD BUTTON */}
-                        <a 
-                            href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`}
-                            download="Moses_Okonkwo_Resume.pdf"
-                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-foreground/5 border border-foreground/30 text-foreground font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-foreground hover:text-background shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-                            style={{ clipPath: 'polygon(15px 0, 100% 0, 100% 100%, 0 100%, 0 15px)' }}
-                        >
-                            <span className="tracking-widest">{"//"} EXTRACT_RESUME</span>
-                            <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        </a>
-                    </motion.div>
-                ) : (
-                    <div className="order-2 sm:order-1 hidden sm:block"></div>
-                )}
-                
-                <motion.h1 
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-4xl font-jetbrains font-extrabold text-foreground text-right order-1 sm:order-2"
-                >
-                    SKILLS{" //"}
-                </motion.h1>
-            </div>
-                
-            <div className="flex flex-col gap-32 relative w-full">
-                {skills.length === 0 && (
-                    <div className="text-center font-mono text-foreground/80 font-bold border border-border/20 p-8">
-                        NO_SKILLS_FOUND
-                    </div>
-                )}
-
-                {skills.map((skill: Skill, index: number) => {
-                    const isLeft = index % 2 === 0;
-                    const orderNum = String(skill.order).padStart(2, '0');
-                    const badges = skill.techStack.split(',').map((s: string) => s.trim()).filter(Boolean);
-
-                    return (
-                        <motion.div 
-                            key={skill.id}
-                            initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                            className={`flex flex-col w-full max-w-3xl ${isLeft ? 'items-start text-left' : 'items-end text-right self-end'}`}
-                        >
-                            <div className="flex items-center gap-4 mb-4">
-                                {isLeft ? (
-                                    <>
-                                        <span className="text-accent font-bold text-xl font-jetbrains">{orderNum}</span>
-                                        <div className="w-16 h-[1px] bg-border"></div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="w-16 h-[1px] bg-border"></div>
-                                        <span className="text-accent font-bold text-xl font-jetbrains">{orderNum}</span>
-                                    </>
-                                )}
-                            </div>
-                            
-                            <h2 className="text-3xl font-bold font-jetbrains mb-4 text-foreground hover:text-accent transition-colors">
+                        {/* Left Column: Number and Category */}
+                        <div className="md:w-1/3 flex flex-col gap-2">
+                            <span className="text-accent font-jetbrains font-bold text-base opacity-70">
+                                //{orderNum}
+                            </span>
+                            <h2 className="text-xl md:text-2xl font-bold font-jetbrains text-foreground">
                                 {skill.category}
                             </h2>
-                            
-                            <p className="mb-6 text-lg leading-relaxed text-foreground/90 font-medium">
+                        </div>
+                        
+                        {/* Right Column: Description and Badges */}
+                        <div className="md:w-2/3 flex flex-col gap-3 w-full">
+                            <p className="text-foreground/80 font-mono text-xs md:text-sm leading-relaxed">
                                 {skill.description}
                             </p>
                             
-                            <div className={`flex flex-wrap gap-2 ${isLeft ? '' : 'justify-end'}`}>
+                            <div className="flex flex-wrap gap-1.5 pt-1">
                                 {badges.map((badge: string, i: number) => (
                                     /* eslint-disable-next-line @next/next/no-img-element */
-                                    <img key={i} src={getShieldUrl(badge)} alt={badge} />
+                                    <img 
+                                        key={i} 
+                                        src={getShieldUrl(badge)} 
+                                        alt={badge} 
+                                        className="h-7 opacity-80 group-hover:opacity-100 transition-opacity duration-300" 
+                                    />
                                 ))}
                             </div>
-                        </motion.div>
-                    );
-                })}
-            </div>
-        </motion.div>
+                        </div>
+                    </motion.div>
+                );
+            })}
+        </div>
     )
 }

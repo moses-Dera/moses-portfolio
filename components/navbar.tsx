@@ -35,16 +35,16 @@ export default function Navbar() {
                 <div className="hidden sm:flex flex-row justify-end items-center w-full ml-4">
                     <ul className="flex flex-row justify-end items-center gap-6 ml-auto" style={{ fontFamily: 'var(--font-jetbrains)' }}>
                         <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border border-dashed px-4 py-1 transition-colors hover:bg-foreground hover:text-background border-transparent hover:border-foreground">
-                            <Link href="#skill">Skills</Link>
+                            <Link href="/#skill">Skills</Link>
                         </motion.li>
                         <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border border-dashed px-4 py-1 transition-colors hover:bg-foreground hover:text-background border-transparent hover:border-foreground">
-                            <Link href="#experience">Experience</Link>
+                            <Link href="/#experience">Experience</Link>
                         </motion.li>
                         <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border border-dashed px-4 py-1 transition-colors hover:bg-foreground hover:text-background border-transparent hover:border-foreground">
-                            <Link href="#project">Projects</Link>
+                            <Link href="/#project">Projects</Link>
                         </motion.li>
                         <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border border-dashed px-4 py-1 transition-colors hover:bg-foreground hover:text-background border-transparent hover:border-foreground">
-                            <Link href="#contact">Contact</Link>
+                            <Link href="/#contact">Contact</Link>
                         </motion.li>
                     </ul>
                 </div>
@@ -68,16 +68,16 @@ export default function Navbar() {
                     >
                         <ul className="flex flex-col items-center gap-8" style={{ fontFamily: 'var(--font-jetbrains)' }}>
                             <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="#skill" onClick={() => setIsOpen(false)}>Skills</Link>
+                                <Link href="/#skill" onClick={() => setIsOpen(false)}>Skills</Link>
                             </motion.li>
                             <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="#experience" onClick={() => setIsOpen(false)}>Experience</Link>
+                                <Link href="/#experience" onClick={() => setIsOpen(false)}>Experience</Link>
                             </motion.li>
                             <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="#project" onClick={() => setIsOpen(false)}>Projects</Link>
+                                <Link href="/#project" onClick={() => setIsOpen(false)}>Projects</Link>
                             </motion.li>
                             <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="#contact" onClick={() => setIsOpen(false)}>Contact</Link>
+                                <Link href="/#contact" onClick={() => setIsOpen(false)}>Contact</Link>
                             </motion.li>
                         </ul>
                     </motion.div>

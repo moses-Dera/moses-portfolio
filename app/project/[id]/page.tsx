@@ -57,7 +57,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full mt-10 relative z-10">
-      <Link href="/project" className="inline-flex items-center text-(--color-muted) hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
+      <Link href="/#project" className="inline-flex items-center text-(--color-muted) hover:text-(--color-accent) mb-8 font-mono text-sm transition-colors">
         {"<-- RETURN_TO_PROJECTS"}
       </Link>
 

@@ -3,20 +3,11 @@
 import Link from "next/link"
 import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa"
 import { motion } from "framer-motion"
-import { useState, useEffect } from "react"
-import { getResumeUrl } from "@/app/actions"
 
 export default function HeroSection(){
-  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    getResumeUrl().then(url => {
-      if (url) setResumeUrl(url);
-    });
-  }, []);
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative max-w-6xl mx-auto w-full pt-10 pb-32">
+    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center relative max-w-6xl mx-auto w-full">
       
       {/* LEFT COLUMN: Title and Description */}
       <div className="flex-1 flex flex-col justify-center items-start gap-4 relative z-10"> 
@@ -62,16 +53,6 @@ export default function HeroSection(){
         </div>
 
         <div className="flex gap-4">
-          {resumeUrl && (
-            <>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border-2 border-accent text-foreground font-bold hover:bg-accent hover:text-white transition-colors bg-background/50 backdrop-blur-sm drop-shadow-md">
-                View Resume
-              </a>
-              <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/50 text-foreground font-medium hover:bg-foreground hover:text-background transition-colors flex items-center gap-2 bg-background/30 backdrop-blur-sm drop-shadow-md">
-                Extract Resume <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-              </a>
-            </>
-          )}
           <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold bg-background/30 backdrop-blur-sm drop-shadow-md">
             <Link href="#project">View project</Link>
           </button>

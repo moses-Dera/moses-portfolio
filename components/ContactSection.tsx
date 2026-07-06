@@ -37,7 +37,7 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="flex-1 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto w-full px-6 md:px-12 pt-10 pb-32 overflow-hidden relative z-10"
+            className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 max-w-6xl mx-auto w-full px-6 md:px-12 py-0 overflow-hidden relative z-10"
         >
             {/* Left Side: Header & Text */}
             <div className="w-full lg:w-1/2 text-left flex flex-col h-full justify-center relative z-10">
@@ -46,12 +46,12 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-foreground mb-8"
+                    className="text-[28px] leading-tight sm:text-3xl lg:text-4xl font-jetbrains font-extrabold text-foreground mb-2 sm:mb-4"
                 >
                     {"// "}CONTACT
                 </motion.h1>
 
-                <p className="text-lg lg:text-xl mb-12 leading-relaxed text-foreground/70">
+                <p className="text-sm lg:text-base mb-4 sm:mb-6 leading-relaxed text-foreground/70">
                     Operating at the intersection of systems engineering and product architecture. Ping me to discuss your next technical challenge.
                 </p>
 
@@ -60,19 +60,19 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.8, duration: 0.5 }}
-                    className="flex gap-6 justify-start mt-4"
+                    className="flex gap-4 sm:gap-6 justify-start mt-0 sm:mt-2"
                 >
                     <a href="https://github.com/moses-Dera" target="_blank" rel="noopener noreferrer">
-                        <FaGithub size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                        <FaGithub className="w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
                     </a>
                     <a href="https://www.linkedin.com/in/m-chidera-okonkwo/" target="_blank" rel="noopener noreferrer">
-                        <FaLinkedin size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                        <FaLinkedin className="w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
                     </a>
                     <a href="https://www.credly.com/users/moses-okonkwo" target="_blank" rel="noopener noreferrer">
-                        <FaCertificate size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                        <FaCertificate className="w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
                     </a>
                     <a href="https://x.com/0x_moze" target="_blank" rel="noopener noreferrer">
-                        <FaTwitter size={32} className="hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
+                        <FaTwitter className="w-6 h-6 sm:w-8 sm:h-8 hover:scale-110 transition-transform" style={{ color: 'var(--color-accent)' }} />
                     </a>
                 </motion.div>
             </div>
@@ -84,18 +84,18 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="backdrop-blur-sm border p-8 lg:p-10 hover:bg-foreground/5 transition-all border-border rounded-lg w-full bg-foreground/5"
+                    className="backdrop-blur-sm border p-4 lg:p-6 hover:bg-foreground/5 transition-all border-border rounded-lg w-full bg-foreground/5"
                 >
-                    <h2 className="text-2xl font-jetbrains mb-6 text-foreground">Let&apos;s Connect</h2>
+                    <h2 className="text-lg sm:text-xl font-jetbrains mb-3 sm:mb-4 text-foreground">Let&apos;s Connect</h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
                         <input
                             type="text"
                             placeholder="Your Name"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
-                            className="w-full p-3 border-2 bg-transparent font-mono"
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-xs sm:text-sm"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -108,7 +108,7 @@ export default function ContactSection() {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
-                            className="w-full p-3 border-2 bg-transparent font-mono"
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-xs sm:text-sm"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -120,8 +120,8 @@ export default function ContactSection() {
                             value={formData.message}
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             required
-                            rows={4}
-                            className="w-full p-3 border-2 bg-transparent font-mono resize-none"
+                            rows={2}
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono resize-none text-xs sm:text-sm"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -131,7 +131,7 @@ export default function ContactSection() {
                         <button
                             type="submit"
                             disabled={sending}
-                            className="w-full py-3 text-background font-semibold transition-all hover:scale-105"
+                            className="w-full py-2 sm:py-2.5 mt-2 text-xs sm:text-sm text-background font-semibold transition-all hover:scale-105"
                             style={{
                                 backgroundColor: sent ? 'green' : 'var(--color-accent)',
                                 clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))'

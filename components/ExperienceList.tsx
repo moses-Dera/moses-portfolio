@@ -23,7 +23,7 @@ export default function ExperienceList({ experiences }: { experiences: Experienc
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-3">
       {experiences.map((exp) => (
         <ExperienceCard 
           key={exp.id} 
