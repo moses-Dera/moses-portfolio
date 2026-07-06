@@ -14,7 +14,7 @@ export default function HeroSection(){
       <div className="flex-1 flex flex-col justify-center items-start gap-4 relative z-10"> 
         <div className="flex flex-col text-3xl sm:text-5xl md:text-6xl font-extrabold font-jetbrains text-foreground">
           <div className="ml-8 text-accent">{"\\\\.."}</div>
-          <DecryptedText text="MOSES C. OKONKWO" delay={500} speed={40} maxIterations={15} />
+          <DecryptedText text="MOSES C. OKONKWO" delay={500} speed={40} revealPerTick={0.8} />
           <div className="ml-8 text-accent">{"..\\\\"}</div>
         </div>
         
@@ -23,8 +23,7 @@ export default function HeroSection(){
         </div>
 
         <p className="font-mono text-base md:text-lg w-full lg:w-3/4 text-foreground/90 font-semibold leading-relaxed mt-6 drop-shadow-lg">
-          Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
-        </p>
+          System architecture, high-concurrency APIs, and LLM integration — built for real-world constraints.</p>
       </div>
 
       {/* RIGHT COLUMN: Socials and Button (Bottom Right) */}
