@@ -26,11 +26,11 @@ export default function Home(){
           <div className="ml-8 text-accent">{"..\\\\"}</div>
         </div>
         
-        <div className="font-fira text-lg sm:text-xl border-b-2 border-accent pb-1 text-foreground inline-block mt-4">
+        <div className="font-fira text-lg sm:text-xl border-b-2 border-accent pb-1 text-foreground font-semibold inline-block mt-4 drop-shadow-md">
           Software Engineer // Backend & AI Systems
         </div>
 
-        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground/90 leading-relaxed mt-6">
+        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground font-medium leading-relaxed mt-6 drop-shadow-lg">
           Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
         </p>
       </div>
@@ -64,15 +64,15 @@ export default function Home(){
         <div className="flex gap-4">
           {resumeUrl && (
             <>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border-2 border-accent text-foreground font-bold hover:bg-accent hover:text-white transition-colors bg-accent/20">
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border-2 border-accent text-foreground font-bold hover:bg-accent hover:text-white transition-colors bg-background/50 backdrop-blur-sm drop-shadow-md">
                 View Resume
               </a>
-              <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/30 text-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2">
+              <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/50 text-foreground font-medium hover:bg-foreground hover:text-background transition-colors flex items-center gap-2 bg-background/30 backdrop-blur-sm drop-shadow-md">
                 Extract Resume <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
               </a>
             </>
           )}
-          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold">
+          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold bg-background/30 backdrop-blur-sm drop-shadow-md">
             <Link href="/project">View project</Link>
           </button>
         </div>
