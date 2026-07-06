@@ -17,19 +17,19 @@ export default function Icon() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'transparent',
+          background: '#0B1120',
           color: '#ffffff',
           fontFamily: 'monospace',
           fontWeight: 900,
-          fontSize: 32,
-          lineHeight: 0.85,
-          textShadow: '1px 0px 0px #000000, -1px 0px 0px #000000, 0px 1px 0px #000000, 0px -1px 0px #000000, 2px 2px 0px #000000',
+          fontSize: 40,
+          lineHeight: 0.75,
+          textShadow: '1px 0px 0px #ffffff, -1px 0px 0px #ffffff, 0px 1px 0px #ffffff, 0px -1px 0px #ffffff, 1px 1px 0px #ffffff, -1px -1px 0px #ffffff',
         }}
       >
-        <div style={{ display: 'flex', transform: 'translateX(8px) translateY(-4px)' }}>
-          {' \\\\..'}
+        <div style={{ display: 'flex', color: 'white' }}>
+          {'\\\\..'}
         </div>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', color: 'white' }}>
           {'..\\\\'}
         </div>
       </div>
