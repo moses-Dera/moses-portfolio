@@ -79,13 +79,13 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
 
       {/* Hero Image */}
       {project.coverImage && (
-        <div className="relative w-full max-h-[70vh] mb-12 border border-border/50 bg-foreground/5 shadow-[0_0_50px_rgba(59,130,246,0.1)] flex items-center justify-center overflow-hidden"
+        <div className="relative w-full max-w-5xl h-[250px] sm:h-[350px] md:h-[450px] mb-12 border border-border/50 bg-foreground/5 shadow-[0_0_30px_rgba(59,130,246,0.05)] overflow-hidden"
              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%)' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={project.coverImage}
             alt={project.title}
-            className="w-full h-auto max-h-[70vh] object-contain rounded-t-sm"
+            className="w-full h-full object-cover object-top opacity-90 hover:opacity-100 transition-opacity duration-500"
           />
         </div>
       )}

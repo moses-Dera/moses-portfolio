@@ -15,7 +15,7 @@ export default function Navbar() {
                 transition={{ duration: 0.5 }}
                 className="z-50 h-[10vh] sticky top-0 left-0 right-0 flex flex-row justify-between items-center px-4 sm:px-8 p-4 bg-background/40 backdrop-blur-xl border-b border-border/40"
             >
-                <Link href="#home" className="flex-shrink-0 z-50">
+                <Link href="/#home" className="flex-shrink-0 z-50">
                     <motion.div
                     whileHover={{ scale: 1.05 }}
                     className="flex justify-start items-center"
