@@ -18,12 +18,12 @@ export default function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           background: 'transparent',
-          color: '#743cf7ff',
+          color: '#ffffff',
           fontFamily: 'monospace',
           fontWeight: 900,
           fontSize: 32,
           lineHeight: 0.85,
-          textShadow: '1px 0px 0px #743cf7, -1px 0px 0px #743cf7, 0px 1px 0px #743cf7, 0px -1px 0px #743cf7, 1px 1px 0px #743cf7',
+          textShadow: '1px 0px 0px #000000, -1px 0px 0px #000000, 0px 1px 0px #000000, 0px -1px 0px #000000, 2px 2px 0px #000000',
         }}
       >
         <div style={{ display: 'flex', transform: 'translateX(8px) translateY(-4px)' }}>
