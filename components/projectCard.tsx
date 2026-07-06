@@ -63,7 +63,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, name, description, techSt
               className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center font-mono text-foreground/20">
+            <div className="w-full h-full flex items-center justify-center font-mono text-foreground/50 font-bold">
               NO_IMAGE_DATA
             </div>
           )}
@@ -73,8 +73,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, name, description, techSt
 
         {/* Text Container */}
         <div className="relative z-10 flex-1 flex flex-col p-4 md:p-6 w-full md:w-3/5">
-          <h3 className="text-xl md:text-2xl font-jetbrains font-bold text-foreground mb-2 group-hover:text-(--color-accent) transition-colors">{name}</h3>
-          <p className="text-foreground/70 mb-4 text-sm md:text-base flex-1 line-clamp-3 leading-relaxed">{description}</p>
+          <h3 className="text-2xl md:text-3xl font-jetbrains font-extrabold text-foreground mb-2 group-hover:text-(--color-accent) transition-colors">{name}</h3>
+          <p className="text-foreground/90 mb-4 text-sm md:text-base font-medium flex-1 line-clamp-3 leading-relaxed">{description}</p>
           
           <div className="flex flex-wrap gap-1.5 mt-auto">
             {techs.map((tech: string, i: number) => (

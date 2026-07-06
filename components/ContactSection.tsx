@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { DecryptedText } from './DecryptedText';
 
 export default function ContactSection() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -46,12 +47,12 @@ export default function ContactSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-[28px] leading-tight sm:text-3xl lg:text-4xl font-jetbrains font-extrabold text-foreground mb-2 sm:mb-4"
+                    className="text-3xl sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-foreground mb-2 sm:mb-4"
                 >
-                    {"// "}CONTACT
+                    <DecryptedText text="// CONTACT" delay={200} />
                 </motion.h1>
 
-                <p className="text-sm lg:text-base mb-4 sm:mb-6 leading-relaxed text-foreground/70">
+                <p className="text-base lg:text-lg mb-4 sm:mb-6 leading-relaxed text-foreground/90 font-medium">
                     Operating at the intersection of systems engineering and product architecture. Ping me to discuss your next technical challenge.
                 </p>
 
@@ -86,7 +87,7 @@ export default function ContactSection() {
                     transition={{ delay: 0.4, duration: 0.5 }}
                     className="backdrop-blur-sm border p-4 lg:p-6 hover:bg-foreground/5 transition-all border-border rounded-lg w-full bg-foreground/5"
                 >
-                    <h2 className="text-lg sm:text-xl font-jetbrains mb-3 sm:mb-4 text-foreground">Let&apos;s Connect</h2>
+                    <h2 className="text-xl sm:text-2xl font-jetbrains mb-3 sm:mb-4 text-foreground font-bold">Let&apos;s Connect</h2>
 
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
                         <input
@@ -95,7 +96,7 @@ export default function ContactSection() {
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             required
-                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-xs sm:text-sm"
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-sm sm:text-base font-medium"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -108,7 +109,7 @@ export default function ContactSection() {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             required
-                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-xs sm:text-sm"
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono text-sm sm:text-base font-medium"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -121,7 +122,7 @@ export default function ContactSection() {
                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                             required
                             rows={2}
-                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono resize-none text-xs sm:text-sm"
+                            className="w-full p-2 sm:p-2.5 border-2 bg-transparent font-mono resize-none text-sm sm:text-base font-medium"
                             style={{
                                 borderColor: 'var(--color-accent)',
                                 color: 'var(--color-text)',
@@ -131,7 +132,7 @@ export default function ContactSection() {
                         <button
                             type="submit"
                             disabled={sending}
-                            className="w-full py-2 sm:py-2.5 mt-2 text-xs sm:text-sm text-background font-semibold transition-all hover:scale-105"
+                            className="w-full py-2.5 sm:py-3 mt-2 text-base sm:text-lg text-background font-bold transition-all hover:scale-105"
                             style={{
                                 backgroundColor: sent ? 'green' : 'var(--color-accent)',
                                 clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))'

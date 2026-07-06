@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { FaGithub, FaLinkedin, FaTwitter, FaCertificate } from "react-icons/fa"
 import { motion } from "framer-motion"
+import { DecryptedText } from "./DecryptedText"
 
 export default function HeroSection(){
 
@@ -11,17 +12,17 @@ export default function HeroSection(){
       
       {/* LEFT COLUMN: Title and Description */}
       <div className="flex-1 flex flex-col justify-center items-start gap-4 relative z-10"> 
-        <div className="flex flex-col text-2xl sm:text-4xl md:text-5xl font-extrabold font-jetbrains text-foreground">
+        <div className="flex flex-col text-3xl sm:text-5xl md:text-6xl font-extrabold font-jetbrains text-foreground">
           <div className="ml-8 text-accent">{"\\\\.."}</div>
-          <div>MOSES C. OKONKWO</div>
+          <DecryptedText text="MOSES C. OKONKWO" delay={500} speed={40} maxIterations={15} />
           <div className="ml-8 text-accent">{"..\\\\"}</div>
         </div>
         
-        <div className="font-fira text-lg sm:text-xl border-b-2 border-accent pb-1 text-foreground font-semibold inline-block mt-4 drop-shadow-md">
+        <div className="font-fira text-xl sm:text-2xl border-b-2 border-accent pb-1 text-foreground font-bold inline-block mt-4 drop-shadow-md">
           Software Engineer // Backend & AI Systems
         </div>
 
-        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground font-medium leading-relaxed mt-6 drop-shadow-lg">
+        <p className="font-mono text-base md:text-lg w-full lg:w-3/4 text-foreground/90 font-semibold leading-relaxed mt-6 drop-shadow-lg">
           Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
         </p>
       </div>
@@ -53,7 +54,7 @@ export default function HeroSection(){
         </div>
 
         <div className="flex gap-4">
-          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold bg-background/30 backdrop-blur-sm drop-shadow-md">
+          <button className="font-jetbrains text-base px-6 py-3 border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-extrabold bg-background/30 backdrop-blur-sm drop-shadow-md">
             <Link href="#project">View project</Link>
           </button>
         </div>

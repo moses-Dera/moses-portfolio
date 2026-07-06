@@ -77,17 +77,17 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                     >
                         {/* Left Column: Number and Category */}
                         <div className="md:w-1/3 flex flex-col gap-2">
-                            <span className="text-accent font-jetbrains font-bold text-base opacity-70">
+                            <span className="text-accent font-jetbrains font-bold text-lg opacity-90">
                                 //{orderNum}
                             </span>
-                            <h2 className="text-xl md:text-2xl font-bold font-jetbrains text-foreground">
+                            <h2 className="text-2xl md:text-3xl font-extrabold font-jetbrains text-foreground/90 uppercase tracking-tight">
                                 {skill.category}
                             </h2>
                         </div>
                         
                         {/* Right Column: Description and Badges */}
                         <div className="md:w-2/3 flex flex-col gap-3 w-full">
-                            <p className="text-foreground/80 font-mono text-xs md:text-sm leading-relaxed">
+                            <p className="text-foreground/90 font-mono text-sm md:text-base font-medium leading-relaxed">
                                 {skill.description}
                             </p>
                             

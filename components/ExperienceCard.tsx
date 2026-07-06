@@ -42,15 +42,15 @@ export default function ExperienceCard({
 
           <div className="flex justify-between items-start mb-0.5">
             <div>
-              <h3 className="text-base md:text-lg font-jetbrains font-bold text-foreground mb-1 uppercase">
+              <h3 className="text-lg md:text-xl font-jetbrains font-extrabold text-foreground mb-1 uppercase">
                 {exp.role}
               </h3>
               <div className="flex flex-wrap items-center gap-2">
-                <h4 className="font-mono text-foreground/60 text-xs flex items-center gap-1">
+                <h4 className="font-mono text-foreground/90 text-sm font-semibold flex items-center gap-1">
                   <span className="text-accent">@</span> {exp.company}
                 </h4>
-                <span className="text-foreground/30 text-[10px]">|</span>
-                <span className="font-mono text-[10px] text-accent/80 font-bold">
+                <span className="text-foreground/40 text-[10px]">|</span>
+                <span className="font-mono text-xs text-accent/90 font-extrabold">
                   {exp.startDate} - {exp.endDate || 'PRESENT'}
                 </span>
               </div>
@@ -73,7 +73,7 @@ export default function ExperienceCard({
                 className="overflow-hidden"
               >
                 {/* Bullet Points */}
-                <div className="font-mono text-xs md:text-sm text-foreground/80 space-y-2 pb-2">
+                <div className="font-mono text-sm md:text-base text-foreground/90 font-medium space-y-2 pb-2 mt-2">
                   {exp.description.split('\n').filter((line: string) => line.trim().length > 0).map((line: string, i: number) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="text-accent mt-0.5">▹</span>

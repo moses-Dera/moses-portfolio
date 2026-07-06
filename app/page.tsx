@@ -5,6 +5,7 @@ import ExperienceList from '@/components/ExperienceList';
 import ProjectCard from '@/components/projectCard';
 import ContactSection from '@/components/ContactSection';
 import { Skill } from '@prisma/client';
+import { DecryptedText } from '@/components/DecryptedText';
 
 export const revalidate = 60; // Optional cache
 
@@ -87,7 +88,7 @@ export default async function Home() {
           <div className="mb-6 md:mb-8 flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-border/20 pb-4">
             <div className="text-left">
               <h2 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground tracking-tight">
-                {"// "}SKILLS
+                <DecryptedText text="// SKILLS" delay={200} />
               </h2>
             </div>
 
@@ -124,7 +125,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto px-6 md:px-12 w-full relative z-10">
           <div className="mb-6 md:mb-8 text-center md:text-left">
             <h2 className="text-4xl md:text-6xl font-jetbrains font-extrabold text-foreground tracking-tight">
-              {"// "}EXPERIENCE
+              <DecryptedText text="// EXPERIENCE" delay={200} />
             </h2>
           </div>
 
@@ -140,7 +141,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto w-full px-6 md:px-12 relative z-10 mb-4 md:mb-6">
           <div className="text-center md:text-left">
             <h2 className="text-3xl md:text-5xl font-jetbrains font-extrabold text-foreground tracking-tight">
-              {"// "}PROJECTS
+              <DecryptedText text="// PROJECTS" delay={200} />
             </h2>
           </div>
         </div>
