@@ -15,6 +15,8 @@ export default function Navbar() {
         setIsOpen(false);
     }, [pathname]);
 
+    const isActive = (path: string) => pathname.startsWith(path);
+
     return (
         <>
             <motion.nav
@@ -31,7 +33,7 @@ export default function Navbar() {
                     <motion.div
                         whileHover={{ rotate: 90 }}
                         transition={{ duration: 0.3 }}
-                        className="flex flex-col items-start font-fira text-(--color-accent) leading-[0.85] font-bold text-sm sm:text-base"
+                        className="flex flex-col items-start font-fira text-[var(--color-accent)] leading-[0.85] font-bold text-sm sm:text-base"
                     >
                         <span className="translate-x-[2px] -translate-y-[2px] whitespace-pre">{` \\\\..`}</span>
                         <span className="whitespace-pre">{`..\\\\`}</span>
@@ -42,16 +44,16 @@ export default function Navbar() {
                 {/* Desktop Links */}
                 <div className="hidden sm:flex flex-row justify-end items-center w-full ml-4">
                     <ul className="flex flex-row justify-end items-center gap-6 ml-auto" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className={`text-xl font-light border border-dashed px-4 py-1 transition-colors ${isActive('/skill') ? 'bg-foreground text-background border-foreground' : 'hover:bg-foreground/10'}`}>
                             <Link href="/skill">Skills</Link>
                         </motion.li>
-                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className={`text-xl font-light border border-dashed px-4 py-1 transition-colors ${isActive('/experience') ? 'bg-foreground text-background border-foreground' : 'hover:bg-foreground/10'}`}>
                             <Link href="/experience">Experience</Link>
                         </motion.li>
-                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-dashed hover:border-none p-2">
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className={`text-xl font-light border border-dashed px-4 py-1 transition-colors ${isActive('/project') ? 'bg-foreground text-background border-foreground' : 'hover:bg-foreground/10'}`}>
                             <Link href="/project">Projects</Link>
                         </motion.li>
-                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className="text-xl font-light border-2 border-b-2 border-dashed hover:border-none p-2">
+                        <motion.li whileHover={{ scale: 1.1, y: -2 }} className={`text-xl font-light border border-dashed px-4 py-1 transition-colors ${isActive('/contact') ? 'bg-foreground text-background border-foreground' : 'hover:bg-foreground/10'}`}>
                             <Link href="/contact">Contact</Link>
                         </motion.li>
                     </ul>
@@ -75,17 +77,17 @@ export default function Navbar() {
                         className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col items-center justify-center sm:hidden"
                     >
                         <ul className="flex flex-col items-center gap-8" style={{ fontFamily: 'var(--font-jetbrains)' }}>
-                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="/skill">Skills</Link>
+                            <motion.li whileHover={{ scale: 1.1 }} className={`text-3xl font-light tracking-widest border-b border-dashed pb-2 ${isActive('/skill') ? 'text-accent border-accent font-medium' : ''}`}>
+                                <Link href="/skill" onClick={() => setIsOpen(false)}>Skills</Link>
                             </motion.li>
-                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="/experience">Experience</Link>
+                            <motion.li whileHover={{ scale: 1.1 }} className={`text-3xl font-light tracking-widest border-b border-dashed pb-2 ${isActive('/experience') ? 'text-accent border-accent font-medium' : ''}`}>
+                                <Link href="/experience" onClick={() => setIsOpen(false)}>Experience</Link>
                             </motion.li>
-                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="/project">Projects</Link>
+                            <motion.li whileHover={{ scale: 1.1 }} className={`text-3xl font-light tracking-widest border-b border-dashed pb-2 ${isActive('/project') ? 'text-accent border-accent font-medium' : ''}`}>
+                                <Link href="/project" onClick={() => setIsOpen(false)}>Projects</Link>
                             </motion.li>
-                            <motion.li whileHover={{ scale: 1.1 }} className="text-3xl font-light tracking-widest border-b border-dashed pb-2">
-                                <Link href="/contact">Contact</Link>
+                            <motion.li whileHover={{ scale: 1.1 }} className={`text-3xl font-light tracking-widest border-b border-dashed pb-2 ${isActive('/contact') ? 'text-accent border-accent font-medium' : ''}`}>
+                                <Link href="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
                             </motion.li>
                         </ul>
                     </motion.div>

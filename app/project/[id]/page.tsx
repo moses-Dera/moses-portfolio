@@ -44,6 +44,15 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
     notFound();
   }
 
+  const allProjects = await prisma.project.findMany({
+    select: { id: true, title: true },
+    orderBy: { createdAt: 'desc' }
+  });
+
+  const currentIndex = allProjects.findIndex((p: { id: string }) => p.id === id);
+  const nextProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
+  const prevProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+
   const techStack = project.techStack.split(',').map((t: string) => t.trim());
 
   return (
@@ -126,8 +135,8 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
                     [&>h3]:text-xl [&>h3]:md:text-2xl [&>h3]:font-jetbrains [&>h3]:font-bold [&>h3]:text-foreground/90 [&>h3]:mt-8 [&>h3]:mb-4
                     [&>ul]:ml-6 [&>ul]:list-disc [&>ul]:marker:text-(--color-accent) [&>ul]:space-y-2 [&>ul]:mb-6
                     [&>ol]:ml-6 [&>ol]:list-decimal [&>ol]:marker:text-(--color-accent) [&>ol]:space-y-2 [&>ol]:mb-6
-                    [&>p>strong]:text-white [&>p>strong]:font-bold
-                    [&>li>strong]:text-white [&>li>strong]:font-bold
+                    [&>p>strong]:text-foreground [&>p>strong]:font-bold
+                    [&>li>strong]:text-foreground [&>li>strong]:font-bold
                     [&_a]:text-(--color-accent) [&_a]:hover:underline
                     [&_blockquote]:border-l-4 [&_blockquote]:border-(--color-accent) [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-foreground/60
                     [&_code]:bg-foreground/10 [&_code]:px-1 [&_code]:rounded
@@ -149,7 +158,7 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
       <div className="mt-16 mb-16 flex flex-wrap gap-4 border-t border-border/40 pt-8">
         {project.liveUrl && (
           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" 
-             className="px-8 py-4 font-jetbrains font-bold bg-accent text-white hover:opacity-80 transition-opacity"
+             className="px-8 py-4 font-jetbrains font-bold bg-accent text-background hover:opacity-80 transition-opacity"
              style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}>
             LAUNCH_APPLICATION
           </a>
@@ -160,6 +169,27 @@ export default async function ProjectCaseStudy({ params }: { params: Promise<{ i
              style={{ clipPath: 'polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px))' }}>
             VIEW_SOURCE_CODE
           </a>
+        )}
+      </div>
+
+      {/* Project Navigation */}
+      <div className="mt-8 mb-16 flex flex-col md:flex-row justify-between items-center border-t border-border/40 pt-8 gap-6">
+        {prevProject ? (
+          <Link href={`/project/${prevProject.id}`} className="group flex flex-col items-start w-full md:w-1/2 text-left hover:bg-foreground/5 p-4 transition-colors">
+            <span className="text-foreground/50 font-mono text-sm mb-2 group-hover:text-accent transition-colors">{"<-- PREVIOUS_PROJECT"}</span>
+            <span className="text-lg font-jetbrains font-bold text-foreground line-clamp-1">{prevProject.title}</span>
+          </Link>
+        ) : (
+          <div className="w-full md:w-1/2 p-4"></div>
+        )}
+
+        {nextProject ? (
+          <Link href={`/project/${nextProject.id}`} className="group flex flex-col items-end w-full md:w-1/2 text-right hover:bg-foreground/5 p-4 transition-colors">
+            <span className="text-foreground/50 font-mono text-sm mb-2 group-hover:text-accent transition-colors">{"NEXT_PROJECT -->"}</span>
+            <span className="text-lg font-jetbrains font-bold text-foreground line-clamp-1">{nextProject.title}</span>
+          </Link>
+        ) : (
+          <div className="w-full md:w-1/2 p-4"></div>
         )}
       </div>
     </div>

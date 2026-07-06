@@ -36,7 +36,7 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="min-h-[calc(100vh-160px)] p-8 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl mx-auto w-full overflow-hidden"
+            className="flex-1 flex flex-col lg:flex-row items-center justify-between gap-12 max-w-6xl mx-auto w-full px-6 md:px-12 pt-10 pb-32 overflow-hidden relative z-10"
         >
             {/* Left Side: Header & Text */}
             <div className="w-full lg:w-1/2 text-left flex flex-col h-full justify-center relative z-10">
@@ -44,7 +44,7 @@ export default function Contact() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-accent mb-8"
+                    className="text-[28px] leading-tight sm:text-4xl lg:text-5xl font-jetbrains font-extrabold text-foreground mb-8"
                 >
                     {"// "}CONTACT
                 </motion.h1>
@@ -127,7 +127,7 @@ export default function Contact() {
                         <button
                             type="submit"
                             disabled={sending}
-                            className="w-full py-3 text-white font-semibold transition-all hover:scale-105"
+                            className="w-full py-3 text-background font-semibold transition-all hover:scale-105"
                             style={{
                                 backgroundColor: sent ? 'green' : 'var(--color-accent)',
                                 clipPath: 'polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))'

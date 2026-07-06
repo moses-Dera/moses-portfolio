@@ -69,7 +69,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="min-h-screen p-8 flex flex-col gap-10 overflow-x-hidden relative z-10"
+            className="flex flex-col gap-10 overflow-x-hidden w-full"
         >
             <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-start gap-8 sm:gap-4 mb-20">
                 {resumeUrl ? (
@@ -84,7 +84,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                             href={resumeUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-accent hover:text-white hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
+                            className="group relative inline-flex items-center gap-2 sm:gap-4 px-6 py-3 sm:px-10 sm:py-5 bg-accent/10 border border-accent/30 text-accent font-jetbrains font-bold text-sm sm:text-lg transition-all hover:bg-accent hover:text-background hover:border-accent shadow-[0_0_20px_rgba(79,70,229,0.15)] hover:shadow-[0_0_30px_rgba(79,70,229,0.4)]"
                             style={{ clipPath: 'polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%)' }}
                         >
                             <span className="tracking-widest">{"//"} VIEW_RESUME</span>
@@ -110,7 +110,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="text-4xl font-jetbrains font-extrabold text-accent text-right order-1 sm:order-2"
+                    className="text-4xl font-jetbrains font-extrabold text-foreground text-right order-1 sm:order-2"
                 >
                     SKILLS{" //"}
                 </motion.h1>
@@ -118,7 +118,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                 
             <div className="flex flex-col gap-32 relative w-full">
                 {skills.length === 0 && (
-                    <div className="text-center font-mono text-foreground/50 border border-border/20 p-8">
+                    <div className="text-center font-mono text-foreground/80 font-bold border border-border/20 p-8">
                         NO_SKILLS_FOUND
                     </div>
                 )}
@@ -155,7 +155,7 @@ export default function SkillList({ skills }: { skills: Skill[] }) {
                                 {skill.category}
                             </h2>
                             
-                            <p className="mb-6 text-lg leading-relaxed text-foreground/70">
+                            <p className="mb-6 text-lg leading-relaxed text-foreground/90 font-medium">
                                 {skill.description}
                             </p>
                             

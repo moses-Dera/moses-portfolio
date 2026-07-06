@@ -67,59 +67,61 @@ export default function LightboxGallery({ images }: { images: ImageType[] }) {
         ))}
       </div>
 
-      <AnimatePresence>
-        {isMounted && selectedIndex !== null && createPortal(
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[99999] bg-background/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
-            onClick={closeLightbox}
-          >
-            <button 
+      {isMounted && createPortal(
+        <AnimatePresence>
+          {selectedIndex !== null && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[99999] bg-background/90 backdrop-blur-xl flex items-center justify-center p-4 md:p-12"
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-foreground/70 hover:text-foreground transition-colors z-[10010]"
             >
-              <FaTimes size={30} />
-            </button>
+              <button 
+                onClick={closeLightbox}
+                className="absolute top-6 right-6 text-foreground/70 hover:text-foreground transition-colors z-[10010]"
+              >
+                <FaTimes size={30} />
+              </button>
 
-            {images.length > 1 && (
-              <>
-                <button 
-                  onClick={prevImage}
-                  className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 text-foreground/50 hover:text-foreground transition-colors p-4 z-[10010]"
-                >
-                  <FaChevronLeft size={40} />
-                </button>
-                <button 
-                  onClick={nextImage}
-                  className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2 text-foreground/50 hover:text-foreground transition-colors p-4 z-[10010]"
-                >
-                  <FaChevronRight size={40} />
-                </button>
-              </>
-            )}
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={prevImage}
+                    className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2 text-foreground/50 hover:text-foreground transition-colors p-4 z-[10010]"
+                  >
+                    <FaChevronLeft size={40} />
+                  </button>
+                  <button 
+                    onClick={nextImage}
+                    className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2 text-foreground/50 hover:text-foreground transition-colors p-4 z-[10010]"
+                  >
+                    <FaChevronRight size={40} />
+                  </button>
+                </>
+              )}
 
-            <div className="relative max-w-7xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <motion.img
-                key={selectedIndex}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
-                src={images[selectedIndex].url}
-                alt={images[selectedIndex].alt}
-                className="max-w-full max-h-[85vh] object-contain shadow-2xl border border-foreground/10"
-              />
-              <div className="mt-6 text-center">
-                <p className="text-foreground/80 font-mono text-sm md:text-base">
-                  {images[selectedIndex].alt} <span className="opacity-50 ml-2">({selectedIndex + 1} / {images.length})</span>
-                </p>
+              <div className="relative max-w-7xl max-h-[85vh] w-full h-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                <motion.img
+                  key={selectedIndex}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  src={images[selectedIndex].url}
+                  alt={images[selectedIndex].alt}
+                  className="max-w-full max-h-[85vh] object-contain shadow-2xl border border-foreground/10"
+                />
+                <div className="mt-6 text-center">
+                  <p className="text-foreground/80 font-mono text-sm md:text-base">
+                    {images[selectedIndex].alt} <span className="opacity-50 ml-2">({selectedIndex + 1} / {images.length})</span>
+                  </p>
+                </div>
               </div>
-            </div>
-          </motion.div>,
-          document.body
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }

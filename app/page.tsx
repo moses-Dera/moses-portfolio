@@ -16,7 +16,7 @@ export default function Home(){
   }, []);
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative">
+    <div className="flex-1 flex flex-col lg:flex-row p-6 md:p-12 gap-8 items-stretch justify-center min-h-[80vh] relative max-w-6xl mx-auto w-full pt-10 pb-32">
       
       {/* LEFT COLUMN: Title and Description */}
       <div className="flex-1 flex flex-col justify-center items-start gap-4 relative z-10"> 
@@ -30,7 +30,7 @@ export default function Home(){
           Software Engineer // Backend & AI Systems
         </div>
 
-        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground/70 leading-relaxed mt-6">
+        <p className="font-mono text-sm md:text-base w-full lg:w-3/4 text-foreground/90 leading-relaxed mt-6">
           Building scalable backend infrastructure and intelligent AI workflows. I specialize in system architecture, designing high-concurrency APIs, and integrating Large Language Models (LLMs) to engineer resilient, data-driven applications.
         </p>
       </div>
@@ -64,7 +64,7 @@ export default function Home(){
         <div className="flex gap-4">
           {resumeUrl && (
             <>
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border border-accent text-accent hover:bg-accent hover:text-black transition-colors">
+              <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="font-jetbrains text-sm px-4 py-2 border-2 border-accent text-foreground font-bold hover:bg-accent hover:text-white transition-colors bg-accent/20">
                 View Resume
               </a>
               <a href={`/api/download-resume?url=${encodeURIComponent(resumeUrl)}`} download="Moses_Okonkwo_Resume.pdf" className="font-jetbrains text-sm px-4 py-2 border border-foreground/30 text-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2">
@@ -72,7 +72,7 @@ export default function Home(){
               </a>
             </>
           )}
-          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors">
+          <button className="font-jetbrains text-sm px-4 py-2 border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors font-bold">
             <Link href="/project">View project</Link>
           </button>
         </div>

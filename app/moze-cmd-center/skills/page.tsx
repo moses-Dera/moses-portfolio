@@ -73,7 +73,7 @@ export default async function ManageSkillsPage() {
               <input name="order" type="number" min="1" defaultValue="1" className="w-full bg-background border border-border/40 p-2 font-mono text-sm focus:border-accent outline-none" />
             </div>
 
-            <button type="submit" className="mt-4 bg-accent text-white font-jetbrains font-bold py-3 hover:bg-accent/80 transition-colors">
+            <button type="submit" className="mt-4 bg-accent text-background font-jetbrains font-bold py-3 hover:bg-accent/80 transition-colors">
               EXECUTE.INSERT()
             </button>
           </form>

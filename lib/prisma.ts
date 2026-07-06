@@ -1,10 +1,15 @@
 import { PrismaClient } from '@prisma/client'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { Pool } from 'pg'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({
-    accelerateUrl: process.env.DATABASE_URL
-  }).$extends(withAccelerate())
+  // Replace sslmode=require with sslmode=verify-full to suppress pg connection warnings
+  const connectionString = `${process.env.DIRECT_URL}`.replace('sslmode=require', 'sslmode=verify-full')
+  
+  const pool = new Pool({ connectionString })
+  const adapter = new PrismaPg(pool)
+  
+  return new PrismaClient({ adapter })
 }
 
 declare const globalThis: {

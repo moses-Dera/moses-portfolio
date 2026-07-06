@@ -31,20 +31,20 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Moses Chidera Okonkwo - Full-Stack Developer",
+    default: "Moses Chidera Okonkwo - Full-Stack Software Engineer | System Architect",
     template: "%s | Moses Chidera Okonkwo"
   },
-  description: "Full-stack web developer and software engineer specializing in APIs, databases, and modern frontend frameworks. Building robust backend systems with clean interfaces.",
+  description: "Full-Stack Software Engineer and System Architect specializing in scalable backend infrastructure, distributed systems, and modern frontend frameworks.",
   applicationName: "Moses Portfolio",
   authors: [{ name: "Moses C. Okonkwo", url: "https://www.linkedin.com/in/m-chidera-okonkwo/" }],
   generator: "Next.js",
-  keywords: ["Moses Okonkwo", "Full-stack developer", "Software engineer", "Javascript", "Python", "React", "Next.js", "Node.js", "APIs", "Databases", "Web Development", "Frontend", "Backend"],
+  keywords: ["Moses Okonkwo", "Full-Stack Developer", "System Architect", "Software Engineer", "Backend", "Infrastructure", "Frontend", "React", "Next.js", "APIs", "Databases"],
   creator: "Moses C. Okonkwo",
 
   publisher: "Moses C. Okonkwo",
   openGraph: {
-    title: "Moses C. Okonkwo - Full-Stack Developer",
-    description: "Full-stack web developer building robust applications with modern technologies",
+    title: "Moses C. Okonkwo - Full-Stack Software Engineer | System Architect",
+    description: "Full-Stack Software Engineer and System Architect building robust, scalable platforms.",
     url: baseUrl,
     siteName: "Moses Chidera Okonkwo Portfolio",
     locale: "en_US",
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Moses C. Okonkwo - Full-Stack Developer",
-    description: "Full-stack web developer building robust applications with modern technologies",
+    title: "Moses C. Okonkwo - Full-Stack Software Engineer | System Architect",
+    description: "Full-Stack Software Engineer and System Architect building robust, scalable platforms.",
     creator: "@0x_moze",
   },
   alternates: {
@@ -72,12 +72,12 @@ const jsonLd = {
     "https://github.com/moses-Dera",
     "https://x.com/0x_moze"
   ],
-  "jobTitle": "Full-Stack Developer",
+  "jobTitle": "Full-Stack Software Engineer",
   "worksFor": {
     "@type": "Organization",
     "name": "Freelance"
   },
-  "description": "Full-stack web developer and software engineer specializing in APIs, databases, and modern frontend frameworks."
+  "description": "Full-Stack Software Engineer and System Architect specializing in scalable backend infrastructure, distributed systems, and modern frontend frameworks."
 };
 
 export default function RootLayout({

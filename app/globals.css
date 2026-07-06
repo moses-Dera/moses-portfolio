@@ -4,8 +4,8 @@
 :root {
   --color-bg: #bcbdb87a;            /* Light background */
   --color-text: #0F172A;          /* Dark text */
-  --color-accent: #4F46E5;        /* Indigo accent */
-  --color-accent-hover: #6366F1;  /* Hover */
+  --color-accent: #0F172A;        /* Black accent in light mode */
+  --color-accent-hover: #334155;  /* Hover */
   --color-muted: #6B7280;         /* Secondary text */
   --color-border: #E5E7EB;
   --cut: 30px;
@@ -14,8 +14,8 @@
 .dark {
   --color-bg: #0B1120;           /* Deep Navy background (matches Screenshot 2) */
   --color-text: #FAFAFA;         /* Light text */
-  --color-accent: #8B5CF6;       /* Brighter accent for dark bg */
-  --color-accent-hover: #A78BFA; /* Hover */
+  --color-accent: #FAFAFA;       /* White accent in dark mode */
+  --color-accent-hover: #D4D4D8; /* Hover */
   --color-muted: #9CA3AF;        /* Muted text */
   --color-border: #1F2937; 
 }
@@ -24,8 +24,8 @@
   :root:not(.light) {
     --color-bg: #0B1120;           /* Deep Navy background */
     --color-text: #FAFAFA;         /* Light text */
-    --color-accent: #8B5CF6;       /* Brighter accent for dark bg */
-    --color-accent-hover: #A78BFA; /* Hover */
+    --color-accent: #FAFAFA;       /* White accent in dark mode */
+    --color-accent-hover: #D4D4D8; /* Hover */
     --color-muted: #9CA3AF;        /* Muted text */
     --color-border: #1F2937; 
   }
